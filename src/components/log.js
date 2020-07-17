@@ -1,5 +1,5 @@
 export default {
-  name: 'HOME',
+  name: 'LOG',
   data: () => ({
     detail: {},
     showDrawer: false,
@@ -68,7 +68,7 @@ export default {
         [],
       )
     },
-    render_list(h) {
+    render_table(h) {
       return h('Table',
         {
           props: {
@@ -90,6 +90,7 @@ export default {
       return h('Drawer',{
           props: {
             value: this.showDrawer,
+            width: '640',
           },
           on: {
             'on-close': () => {
@@ -99,24 +100,24 @@ export default {
         },
         [
           h('List',{},[
-            h('ListItem',{},[h('ListItemMeta', {props: {title: 'ID'}},[this.detail.id])]),
-            h('ListItem',{},[h('ListItemMeta', {props: {title: '创建时间'}},[this.detail.createDate])]),
-            h('ListItem',{},[h('ListItemMeta', {props: {title: '修改时间'}},[this.detail.modifyDate])]),
-            h('ListItem',{},[h('ListItemMeta', {props: {title: '标题'}},[this.detail.title])]),
-            h('ListItem',{},[h('ListItemMeta', {props: {title: '操作'}},[this.detail.action])]),
-            h('ListItem',{},[h('ListItemMeta', {props: {title: 'IP'}},[this.detail.ip])]),
-            h('ListItem',{},[h('ListItemMeta', {props: {title: 'URL'}},[this.detail.url])]),
-            h('ListItem',{},[h('ListItemMeta', {props: {title: '参数'}},[this.detail.param])]),
-            h('ListItem',{},[h('ListItemMeta', {props: {title: '操作状态'}},[this.detail.operationStatus])]),
-            h('ListItem',{},[h('ListItemMeta', {props: {title: '错误信息'}},[this.detail.message])]),
+            h('ListItem',{},[h('ListItemMeta', {props: {title: 'ID', description: this.detail.id}},[])]),
+            h('ListItem',{},[h('ListItemMeta', {props: {title: '创建时间', description: this.detail.createDate}},[])]),
+            h('ListItem',{},[h('ListItemMeta', {props: {title: '修改时间', description: this.detail.modifyDate}},[])]),
+            h('ListItem',{},[h('ListItemMeta', {props: {title: '标题', description: this.detail.title}},[])]),
+            h('ListItem',{},[h('ListItemMeta', {props: {title: '操作', description: this.detail.action}},[])]),
+            h('ListItem',{},[h('ListItemMeta', {props: {title: 'IP', description: this.detail.ip}},[])]),
+            h('ListItem',{},[h('ListItemMeta', {props: {title: 'URL', description: this.detail.url}},[])]),
+            h('ListItem',{},[h('ListItemMeta', {props: {title: '参数', description: this.detail.param}},[])]),
+            h('ListItem',{},[h('ListItemMeta', {props: {title: '操作状态', description: this.detail.operationStatus === 1? '成功':'失败'}},[])]),
+            h('ListItem',{},[h('ListItemMeta', {props: {title: '错误信息', description: this.detail.message}},[])]),
           ]),
         ]
       );
-    }
+    },
   },
   render(h) {
     return h('div',{},[
-      this.render_list(h),
+      this.render_table(h),
       this.render_page(h),
       this.render_detail(h),
     ])

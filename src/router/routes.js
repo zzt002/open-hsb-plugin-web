@@ -9,7 +9,7 @@ export default [
       {
         path: '/',
         components: {
-          home: () => import('../components/HOME')
+          home: () => import('../components/openIp')
         }
       }
     ]
