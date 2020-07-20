@@ -5,7 +5,7 @@ export default {
     myInput
   },
   data: () => ({
-    loading: false,
+    buttonLoading: false,
     param: {
       serviceStr: '',
       ipStr: '',
@@ -52,12 +52,12 @@ export default {
       return h(
         'Button', {
           props: {
-            loading: this.loading,
+            loading: this.buttonLoading,
           },
           on: {
-          click: ()=>{
-            this.post();
-          }
+            click: ()=>{
+              this.post1();
+            }
           }}, ['提交']
       );
     },
@@ -71,7 +71,21 @@ export default {
       }).catch((ex) => {
         alert(ex.message);
       });
-    }
+    },
+    post1() {
+      this.buttonLoading = true;
+      let that = this;
+      let url = '/api/esbServiceConsumer/openIp';
+      this.$axios.post(url, this.param,
+        function(resp) {
+          that.$Message.success(resp.data);
+          that.buttonLoading = false;
+        },
+        function(err) {
+          that.$Message.error(err.message);
+          that.buttonLoading = false;
+        });
+    },
   },
   render(h) {
     return h('div',{},[

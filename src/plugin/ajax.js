@@ -38,5 +38,26 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export default axiosInstance;
+export default {
+
+    post(url, data, successMethod, errMethod) {
+      return axiosInstance({
+        url: url,
+        method: 'post',
+        params: data,
+      }).then(resp => {
+        successMethod(resp);
+      }).catch(err => {
+        errMethod(err);
+      });
+    },
+
+    successMethod(resp) {
+      alert(resp.data);
+    },
+    errMethod(err) {
+      alert(err.message);
+    }
+
+};
 
