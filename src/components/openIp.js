@@ -1,96 +1,23 @@
-import myInput from '../plugin/myInput'
+import renderList from '../plugin/renderList'
 export default {
   name: 'openIp',
   components: {
-    myInput
+    renderList
   },
   data: () => ({
-    buttonLoading: false,
-    param: {
-      serviceStr: '',
-      ipStr: '',
-    }
+    params: [
+      {title: '服务信息', type: 'Input', key: 'serviceStr',value:'', inputType: 'textarea'},
+      {title: 'IP信息', type: 'Input', key: 'ipStr',value:'', inputType: 'textarea'},
+      {title: '开启权限', type: 'Switch', key: 'status',value: '1', params:[{slot:'1', text:'开'}, {slot:'0', text:'关'}]},
+    ]
   }),
-  methods: {
-    render_input(h) {
-      return h('div',{
-
-      },[
-        this.render_service(h),
-        this.render_ip(h),
-      ]);
-    },
-    render_service(h) {
-      return h('div', {}, [
-          h('h3',{}, '服务信息'),
-          h('Input', {
-            props:{'value': this.param.serviceStr},
-            on: {
-              'on-change': (event) => {
-                this.param.serviceStr = event.target.value;
-              }
-            }
-          }, []),
-        ]
-      );
-    },
-    render_ip(h) {
-      return h('div', {}, [
-          h('h3',{}, 'IP信息'),
-          h('Input', {
-            props:{'value': this.param.ipStr},
-            on: {
-              'on-change': (event) => {
-                this.param.ipStr = event.target.value;
-              }
-            }
-          }, []),
-        ]
-      );
-    },
-    render_submit(h) {
-      return h(
-        'Button', {
-          props: {
-            loading: this.buttonLoading,
-          },
-          on: {
-            click: ()=>{
-              this.post1();
-            }
-          }}, ['提交']
-      );
-    },
-    post() {
-      this.$axios({
-        url: '/api/esbServiceConsumer/openIp',
-        params: this.param,
-        method: 'post',
-      }).then((resp) => {
-        alert(resp.data);
-      }).catch((ex) => {
-        alert(ex.message);
-      });
-    },
-    post1() {
-      this.buttonLoading = true;
-      let that = this;
-      let url = '/api/esbServiceConsumer/openIp';
-      this.$axios.post(url, this.param,
-        function(resp) {
-          that.$Message.success(resp.data);
-          that.buttonLoading = false;
-        },
-        function(err) {
-          that.$Message.error(err.message);
-          that.buttonLoading = false;
-        });
-    },
-  },
   render(h) {
-    return h('div',{},[
-        this.render_input(h),
-        this.render_submit(h),
+    return h('renderList',{
+      props: {
+        params: this.params,
+        url: '/api/esbServiceConsumer/openIp',
+      }
+    },[
     ]);
   }
 }

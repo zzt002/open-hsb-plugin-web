@@ -13,51 +13,73 @@ axiosInstance.interceptors.request.use(
     // console.log('request-err:' + JSON.stringify(err.data));
     return Promise.reject(err);
   }
-
 );
 
 axiosInstance.interceptors.response.use(
   (resp) => {
-    console.log('response:' + JSON.stringify(resp.data));
+    // console.log('response:' + JSON.stringify(resp.data));
     return resp.data;
   },
   (err) => {
-    let resp = err.response.data;
-    switch (resp.status) {
-      case 250:
-        err.message = resp.message;
-        break;
-      case 500:
-        err.message = resp.message;
-        break;
-      default:
-        err.message = `连接服务错误${resp.status}`;
+    if (err.message.indexOf('timeout') > -1) {
+      err.message = '请求超时';
+    } else {
+      let resp = err.response.data;
+      switch (resp.status) {
+        case 250:
+          err.message = resp.message;
+          break;
+        case 500:
+          err.message = resp.message;
+          break;
+        default:
+          err.message = `服务器异常`;
+      }
     }
-
     return Promise.reject(err);
-  }
+  },
 );
 
 export default {
 
-    post(url, data, successMethod, errMethod) {
-      return axiosInstance({
-        url: url,
-        method: 'post',
-        params: data,
-      }).then(resp => {
+  ajax(url, method, data, successMethod, errMethod) {
+    return axiosInstance({
+      url: url,
+      method: method,
+      params: data,
+    }).then(resp => {
+      if (successMethod === undefined) {
+        this.successMethod(resp);
+      } else {
         successMethod(resp);
-      }).catch(err => {
+      }
+    }).catch(err => {
+      if (successMethod === undefined) {
+        this.errMethod(err);
+      } else {
         errMethod(err);
-      });
-    },
+      }
+    });
+  },
+  post(url, data, successMethod, errMethod) {
+    return this.ajax(url, 'post', data, successMethod, errMethod);
+  },
+  get(url, data, successMethod, errMethod) {
+    return this.ajax(url, 'get', data, successMethod, errMethod);
+  },
 
-    successMethod(resp) {
-      alert(resp.data);
-    },
-    errMethod(err) {
-      alert(err.message);
-    }
+  successMethod(resp) {
+    this.$Message.success({
+      content: resp.message,
+      duration: 5,
+    });
+  },
+  errMethod(err) {
+    this.$Message.error({
+      content: err.message,
+      duration: 5,
+    });
+  }
 
 };
 
