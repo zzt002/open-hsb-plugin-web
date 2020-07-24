@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {Message} from 'view-design'
 
 const axiosInstance = axios.create({
   timeout: 20000,
@@ -54,7 +55,7 @@ export default {
         successMethod(resp);
       }
     }).catch(err => {
-      if (successMethod === undefined) {
+      if (errMethod === undefined) {
         this.errMethod(err);
       } else {
         errMethod(err);
@@ -69,13 +70,13 @@ export default {
   },
 
   successMethod(resp) {
-    this.$Message.success({
+    Message.success({
       content: resp.message,
       duration: 5,
     });
   },
   errMethod(err) {
-    this.$Message.error({
+    Message.error({
       content: err.message,
       duration: 5,
     });

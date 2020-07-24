@@ -1,4 +1,4 @@
-import renderList from '../plugin/renderList'
+import commonForm from '../plugin/commonForm'
 export default {
   name: 'openIp',
   data: () => ({
@@ -12,16 +12,17 @@ export default {
       {title: 'VPN环境',key: 'vpnType',value: '2',type:'Radio', params: [{label:'1',text:'VPN1'},{label:'2',text:'VPN2'}]},
       {title: 'http请求',key: 'httpType',value: '2',type:'Radio', params: [{label:'1',text:'GET'},{label:'2',text:'POST'}]},
       {title: '类型（e.g.,省 市）',key: 'portType',value: '市',type:'Radio', params: [{label:'省',text:'省接口'},{label:'市',text:'市接口'}]},
-      {title: '是否存日志',key: 'saveLog',value: 1, type: 'Switch', params: [{slot:'1',text:'是'},{slot:'0',text: '否'}]},
+      {title: '是否存日志',key: 'saveLog',value: 1, type: 'Switch', params: {open:'是', 'close': '否'}},
     ],
   }),
   components: {
-    renderList
+    commonForm
   },
   methods: {
     render_list(h) {
-      return h("renderList",{
+      return h("commonForm",{
         props: {
+          url: '/api/register/publishUnConfig',
           params: this.params,
         }
       },[])

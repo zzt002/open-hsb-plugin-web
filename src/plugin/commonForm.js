@@ -1,19 +1,30 @@
+import commonButton from './commonButton'
 export default {
-  name: 'renderList',
+  name: 'commonForm',
+  components: {
+    commonButton
+  },
   data: () => ({
     buttonLoading: false,
     requestParam: {},
   }),
   props: {
-    url: '',
-    method: 'get',
+    url: {
+      type: String,
+      default:'',
+    },
+    method: {
+      type: String,
+      default: 'get',
+    },
     params: {
       type: Array,
-      value: [
+      default: () => [],
+      example: () => [
         {title: 'title', type: 'Input', key: 'key1', value: 'value', inputType:'text'},
         {title: 'title', type: 'Radio', key: 'key2', value: '1', params: [{label: '1', text: '是'}, {label: '0', text: '否'}]},
-        {title: 'title', type: 'Switch', key: 'key3', value: 'slot', params: [{slot: 'slot', text: '是'}]},
-      ]
+        {title: 'title', type: 'Switch', key: 'key3', value: 'true', params:{open: '是', close: '否'}},
+      ],
     },
   },
   methods: {
@@ -45,20 +56,17 @@ export default {
     render_switch(h, param) {
       return h('i-switch', {
           props: {
-            value: (param.value === undefined || param.value === 0) ? false : true,
+            value: param.value === 1,
           },
           on: {
             'on-change': (value) => {
               param.value = value ? 1 : 0;
             }
           }
-        }, param.params.map((switchParam) => {
-          return h('span', {
-            props: {
-              slot: switchParam.slot === 1 ? 'open' : 'close',
-            }
-          }, switchParam.text)
-        })
+        },[
+          h('span', {slot:'open'},param.params.open),
+          h('span', {slot:'close'},param.params.close),
+        ]
       );
     },
     render_select(h, param) {
@@ -98,38 +106,15 @@ export default {
       }, [])
     },
     render_submit(h) {
-      return h(
-        'Button', {
-          props: {
-            loading: this.buttonLoading,
-          },
-          on: {
-            click: () => {
-              this.post();
-            }
-          }
-        }, ['提交']
-      );
-    },
-    post() {
-      this.buttonLoading = true;
       this.dealRequestParam();
-      let _this = this;
-      this.$axios.post(this.url, this.requestParam,
-        function (resp) {
-          _this.$Message.success({
-            content: resp.message,
-            duration: 5,
-          });
-          _this.buttonLoading = false;
-        },
-        function (err) {
-          _this.$Message.error({
-            content: err.message,
-            duration: 5,
-          });
-          _this.buttonLoading = false;
-        });
+      return h(
+        'commonButton', {
+          props: {
+            url: this.url,
+            params: this.params,
+          },
+        }, []
+      );
     },
     dealRequestParam() {
       let obj = Object.create(null);
