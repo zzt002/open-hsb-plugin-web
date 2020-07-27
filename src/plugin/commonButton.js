@@ -13,7 +13,7 @@ export default {
     },
     requestParam: {
       type: Object,
-      default: () =>({}),
+      default: () => {},
     },
   },
   methods: {
@@ -32,9 +32,9 @@ export default {
       );
     },
     post() {
-      this.buttonLoading = true;
       let _this = this;
-      this.$axios.post(this.url, this.requestParam,
+      _this.buttonLoading = true;
+      this.$axios.post(this.url, this.requestParam.default,
         function (resp) {
           _this.$Message.success({
             content: resp.message,

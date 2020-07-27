@@ -55,12 +55,15 @@ export default {
   methods: {
     list() {
       let _this = this;
-      this.$axios.get(this.url, this.param,
+      this.$axios.get(this.url, this.param.default(),
         function (resp) {
           _this.resp_data = resp;
           _this.loading = false;
         },
       );
+    },
+    getRespList() {
+      return 123;
     },
     render_page(h) {
       if (!this.showPage) return;
@@ -87,6 +90,33 @@ export default {
           }
         },
         [],
+      )
+    },
+    render_refresh(h) {
+      let _this = this;
+      return h('Poptip', {
+          props: {
+            'trigger': 'hover',
+            'content': '刷新列表',
+          },
+          style: {
+            'position': 'relative',
+            'left': '47%',
+            'bottom': '10px',
+          },
+        }, [h('a',{},[
+          h('Icon', {
+            props: {
+              type: 'md-refresh',
+              size: '25',
+            },
+            on: {
+              click: () => {
+                _this.list();
+              }
+            }
+          })
+        ])]
       )
     },
     render_table(h) {
@@ -141,6 +171,7 @@ export default {
   },
   render(h) {
     return h('div', {}, [
+      this.render_refresh(h),
       this.render_table(h),
       this.render_page(h),
       this.render_detail(h),
