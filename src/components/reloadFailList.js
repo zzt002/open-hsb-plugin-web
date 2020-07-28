@@ -4,10 +4,11 @@ import commonButton from '../plugin/commonButton'
 export default {
   name: 'LOG',
   components: {
-    commonList,commonButton
+    commonList, commonButton
   },
+  props: ['dataList'],
   data: () => ({
-    parList:[],
+    parList: [],
     logColumns:
       [
         {title: 'ID', key: 'id', tooltip: true, width: '70px', align: 'center'},
@@ -19,32 +20,30 @@ export default {
   }),
   render(h) {
     return h('div', {}, [
-      h('commonButton',{
-        style:{
+      h('commonButton', {
+        style: {
           position: 'relative',
-          bottom:'-23px',
-          left:'-44%',
-          display: this.parList === null || this.parList === undefined || this.parList.length === 0? 'none': 'inline',
+          bottom: '-23px',
+          left: '-44%',
+          display: this.parList === null || this.parList === undefined || this.parList.length === 0 ? 'none' : 'inline',
         },
         props: {
           url: '/api/reload/fail/reload/all',
           submitName: '一键重载',
-        }
-      },[]),
+        },
+      }, []),
       h('commonList', {
         props: {
           url: '/api/reload/fail/list',
           logColumns: this.logColumns,
           showPage: true,
         },
+        on: {
+          getRespList: (value) => {
+            this.parList = value;
+          }
+        }
       })
     ]);
   },
-  mounted() {
-    this.$emit('getRespList', function (value) {
-      this.parList = value;
-      console.log(value);
-    });
-    console.log(this.parList);
-  }
 }

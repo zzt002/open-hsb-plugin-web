@@ -44,10 +44,17 @@ axiosInstance.interceptors.response.use(
 export default {
 
   ajax(url, method, data, successMethod, errMethod) {
+    if (method === 'get') {
+      this.get(url, data, successMethod, errMethod);
+    } else if (method === 'post') {
+      this.post(url, data, successMethod, errMethod);
+    }
+  },
+  post(url, data, successMethod, errMethod) {
     return axiosInstance({
       url: url,
-      method: method,
-      params: data,
+      method: 'post',
+      data: data,
     }).then(resp => {
       if (successMethod === undefined) {
         this.successMethod(resp);
@@ -62,11 +69,24 @@ export default {
       }
     });
   },
-  post(url, data, successMethod, errMethod) {
-    return this.ajax(url, 'post', data, successMethod, errMethod);
-  },
   get(url, data, successMethod, errMethod) {
-    return this.ajax(url, 'get', data, successMethod, errMethod);
+    return axiosInstance({
+      url: url,
+      method: 'get',
+      params: data,
+    }).then(resp => {
+      if (successMethod === undefined) {
+        this.successMethod(resp);
+      } else {
+        successMethod(resp);
+      }
+    }).catch(err => {
+      if (errMethod === undefined) {
+        this.errMethod(err);
+      } else {
+        errMethod(err);
+      }
+    });
   },
 
   successMethod(resp) {

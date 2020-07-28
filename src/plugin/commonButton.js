@@ -11,9 +11,9 @@ export default {
       type: String,
       default: '',
     },
-    requestParam: {
+    params: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
   },
   methods: {
@@ -32,9 +32,11 @@ export default {
       );
     },
     post() {
+      console.log('请求路径:' + this.url);
+      console.log('请求参数:' + JSON.stringify(this.params));
       let _this = this;
       _this.buttonLoading = true;
-      this.$axios.post(this.url, this.requestParam.default,
+      this.$axios.post(this.url, this.params,
         function (resp) {
           _this.$Message.success({
             content: resp.message,

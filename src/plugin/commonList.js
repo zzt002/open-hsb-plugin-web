@@ -55,15 +55,13 @@ export default {
   methods: {
     list() {
       let _this = this;
-      this.$axios.get(this.url, this.param.default(),
+      this.$axios.get(this.url, this.param,
         function (resp) {
           _this.resp_data = resp;
           _this.loading = false;
+          _this.$emit('getRespList', resp.data.list);
         },
       );
-    },
-    getRespList() {
-      return 123;
     },
     render_page(h) {
       if (!this.showPage) return;

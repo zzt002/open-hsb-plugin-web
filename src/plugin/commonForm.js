@@ -1,4 +1,5 @@
 import commonButton from './commonButton'
+
 export default {
   name: 'commonForm',
   components: {
@@ -6,12 +7,12 @@ export default {
   },
   data: () => ({
     buttonLoading: false,
-    requestParam: {},
+    requestParams: {},
   }),
   props: {
     url: {
       type: String,
-      default:'',
+      default: '',
     },
     method: {
       type: String,
@@ -21,22 +22,28 @@ export default {
       type: Array,
       default: () => [],
       example: () => [
-        {title: 'title', type: 'Input', key: 'key1', value: 'value', inputType:'text'},
-        {title: 'title', type: 'Radio', key: 'key2', value: '1', params: [{label: '1', text: '是'}, {label: '0', text: '否'}]},
-        {title: 'title', type: 'Switch', key: 'key3', value: 'true', params:{open: '是', close: '否'}},
+        {title: 'title', type: 'Input', key: 'key1', value: 'value', inputType: 'text'},
+        {
+          title: 'title',
+          type: 'Radio',
+          key: 'key2',
+          value: '1',
+          params: [{label: '1', text: '是'}, {label: '0', text: '否'}]
+        },
+        {title: 'title', type: 'Switch', key: 'key3', value: 'true', params: {open: '是', close: '否'}},
       ],
     },
   },
   methods: {
     render_list(h) {
+      let _this = this;
       return h('div', {}, this.params.map((param) => {
-          let _this = this;
           return h('div', {}, [
             h('h3', {}, param.title),
             (
               function () {
                 if (param.type === undefined) {
-                  return ;
+                  return null;
                 } else if (param.type === 'Input') {
                   return _this.render_input(h, param);
                 } else if (param.type === 'Select') {
@@ -46,7 +53,7 @@ export default {
                 } else if (param.type === 'Radio') {
                   return _this.render_radio(h, param)
                 } else {
-                  return;
+                  return null;
                 }
               }
             )()]);
@@ -54,18 +61,21 @@ export default {
       );
     },
     render_switch(h, param) {
+      let _this = this;
       return h('i-switch', {
           props: {
             value: param.value === 1,
           },
           on: {
             'on-change': (value) => {
-              param.value = value ? 1 : 0;
+              _this.$nextTick(function() {
+                param.value = value ? 1 : 0;
+              });
             }
           }
-        },[
-          h('span', {slot:'open'},param.params.open),
-          h('span', {slot:'close'},param.params.close),
+        }, [
+          h('span', {slot: 'open'}, param.params.open),
+          h('span', {slot: 'close'}, param.params.close),
         ]
       );
     },
@@ -73,24 +83,31 @@ export default {
       return h('Select', {}, []);
     },
     render_radio(h, param) {
+      let _this = this;
       return h('RadioGroup', {
         props: {
           value: param.value,
         },
         on: {
           'on-change': (_value) => {
-            param.value = _value;
+            _this.$nextTick(function() {
+              param.value = _value;
+            })
           }
         }
-      }, param.params.map((radioParam) => {
+      },
+      param.params.map((radioParam) => {
         return h('Radio', {
           props: {
             label: radioParam.label,
+            value: param.value === radioParam.label
           },
         }, radioParam.text);
-      }));
+      })
+    );
     },
     render_input(h, param) {
+      let _this = this;
       return h('Input', {
         props: {
           'type': param.inputType,
@@ -100,18 +117,22 @@ export default {
         },
         on: {
           'on-change': (event) => {
-            param.value = event.target.value;
+            _this.$nextTick(function() {
+              param.value = event.target.value;
+            })
           }
         }
       }, [])
     },
     render_submit(h) {
+      let _this = this;
       this.dealRequestParam();
+      console.log('参数处理后:' + JSON.stringify(this.requestParams));
       return h(
         'commonButton', {
           props: {
-            url: this.url,
-            params: this.params,
+            url: _this.url,
+            params: _this.requestParams,
           },
         }, []
       );
@@ -121,7 +142,7 @@ export default {
       this.params.map((_param) => {
         obj[_param.key] = _param.value;
       });
-      this.requestParam = obj;
+      this.requestParams = obj;
     }
   },
   render(h) {
