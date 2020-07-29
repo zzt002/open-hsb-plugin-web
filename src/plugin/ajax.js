@@ -50,11 +50,21 @@ export default {
       this.post(url, data, successMethod, errMethod);
     }
   },
+  dealPostData(data) {
+    let formData = new FormData();
+    for (let key in data) {
+      formData.append(key, data[key]);
+    }
+    console.log('formData:' + formData);
+    console.log('formDataS:' + JSON.stringify(formData));
+    return formData;
+  },
   post(url, data, successMethod, errMethod) {
+    let formData = this.dealPostData(data);
     return axiosInstance({
       url: url,
       method: 'post',
-      data: data,
+      data: formData,
     }).then(resp => {
       if (successMethod === undefined) {
         this.successMethod(resp);
