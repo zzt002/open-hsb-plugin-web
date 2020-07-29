@@ -1,13 +1,12 @@
-import commonForm from '../plugin/commonForm'
+import commonForm from '../../plugin/commonForm'
 export default {
-  name: 'openIp',
+  name: 'openIpByExcel',
   components: {
     commonForm
   },
   data: () => ({
     params: [
-      {title: '服务信息', type: 'Input', key: 'serviceStr',value:'', inputType: 'textarea'},
-      {title: 'IP信息', type: 'Input', key: 'ipStr',value:'', inputType: 'textarea'},
+      {title: 'Excel文件', type: 'File', key: 'file',value:''},
       {title: '开启权限', type: 'Switch', key: 'status',value: 1, params:{open:'开', close:'关'}},
     ]
   }),
@@ -15,7 +14,7 @@ export default {
     return h('commonForm',{
       props: {
         params: this.params,
-        url: '/api/esbServiceConsumer/openIp',
+        url: '/api/esbServiceConsumer/openIp/excel',
         method: 'post',
       }
     },[

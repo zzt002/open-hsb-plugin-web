@@ -55,7 +55,7 @@ export default {
   methods: {
     list() {
       let _this = this;
-      this.$axios.get(this.url, this.param,
+      this.$axios.get(this.url, this.param.default(),
         function (resp) {
           _this.resp_data = resp;
           _this.loading = false;

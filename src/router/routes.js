@@ -21,13 +21,25 @@ export default [
       {
         path: '/openIp',
         components: {
-          home: () => import('../components/openIp')
+          home: () => import('../components/openIp/openIp')
         }
       },
       {
         path: '/registerInterface',
         components: {
           home: () => import('../components/registerInterface')
+        }
+      },
+      {
+        path: '/openIpByExcel',
+        components: {
+          home: () => import('../components/openIp/openIpByExcel')
+        }
+      },
+      {
+        path: '/reloadByExcel',
+        components: {
+          home: () => import('../components/reload/reloadByExcel')
         }
       }
 

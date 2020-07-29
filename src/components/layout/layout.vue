@@ -66,7 +66,7 @@
                 IP权限
               </template>
               <MenuItem name="2-1" to="/openIp">手动开启权限</MenuItem>
-              <MenuItem name="2-2">Option 2</MenuItem>
+              <MenuItem name="2-2" to="/openIpByExcel">EXCEL权限</MenuItem>
             </Submenu>
             <Submenu name="3">
               <template slot="title">
@@ -75,6 +75,14 @@
               </template>
               <MenuItem name="3-1" to="/registerInterface">接口注册</MenuItem>
               <MenuItem name="3-2">Option 2</MenuItem>
+            </Submenu>
+            <Submenu name="4">
+              <template slot="title">
+                <Icon type="ios-analytics"></Icon>
+                重载
+              </template>
+              <MenuItem name="4-1" to="/reloadByExcel">EXCEL重载</MenuItem>
+              <MenuItem name="4-2">Option 2</MenuItem>
             </Submenu>
           </Menu>
         </Sider>

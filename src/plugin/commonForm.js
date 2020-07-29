@@ -52,6 +52,8 @@ export default {
                   return _this.render_switch(h, param);
                 } else if (param.type === 'Radio') {
                   return _this.render_radio(h, param)
+                } else if (param.type === 'File') {
+                  return _this.render_file(h, param)
                 } else {
                   return null;
                 }
@@ -59,6 +61,28 @@ export default {
             )()]);
         })
       );
+    },
+    render_file(h, param) {
+      let initText = '选择文件';
+      return h('Button', {
+        props:{icon: 'ios-cloud-upload-outline',},
+        on:{click:() => {
+           document.getElementById("select-file").click();
+          }}
+        },[
+        h('input',{
+          attrs:{id:'select-file',type:'file'},
+          style:{opacity:0,position:'relative',left:'-35px','z-index':-1,width:'2px'},
+          on:{'change':(event) => {
+              param.value = '';
+              document.getElementById('fileName').innerText = initText;
+              param.value = event.target.files[0];
+              document.getElementById('fileName').innerText = param.value.name;
+            }
+          }
+        }),
+        h('span', {attrs:{id:'fileName'},},initText),
+        ]);
     },
     render_switch(h, param) {
       let _this = this;
