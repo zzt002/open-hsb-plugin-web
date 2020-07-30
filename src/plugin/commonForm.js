@@ -63,17 +63,71 @@ export default {
       );
     },
     render_file(h, param) {
+      return h('div', {}, [
+        this.render_choose_file(h, param),
+        this.render_choose_file_help(h, param),
+      ])
+
+    },
+    render_choose_file_help(h, param) {
+      let _this = this;
+      return h(
+        'Poptip',
+        {
+          props: {
+            trigger: 'hover',
+            // content: param.help,
+            placement: 'bottom-consume',
+            padding: '0'
+          },
+          on: {
+            'on-popper-show': () => {
+              document.getElementById('help').setAttribute('class', 'ivu-icon ivu-icon-ios-help-circle')
+            },
+            'on-popper-hide': () => {
+              document.getElementById('help').setAttribute('class', 'ivu-icon ivu-icon-ios-help-circle-outline')
+            },
+          },
+        },
+        [
+          h('i', {
+            attrs: {class: 'ivu-icon ivu-icon-ios-help-circle-outline', id: 'help'},
+            style: {cursor: 'help', position: 'relative', top: '-8px', left: '3px'}
+          }),
+          h('div',
+            {
+              slot: 'content',
+            },[
+            (function() {
+              if (param.help.type === 'link') {
+                return h('a', {href:'#',on:{
+                  click: () => {
+                    _this.$axios.download(param.help.url, param.help.fileName);
+                  }
+                  }}, param.help.text);
+              } else if (param.help.type === 'text') {
+                return h('span', {}, param.help.text);
+              }
+            })()]
+          )
+        ]
+      );
+    },
+    render_choose_file(h, param) {
       let initText = '选择文件';
       return h('Button', {
-        props:{icon: 'ios-cloud-upload-outline',},
-        on:{click:() => {
-           document.getElementById("select-file").click();
-          }}
-        },[
-        h('input',{
-          attrs:{id:'select-file',type:'file'},
-          style:{opacity:0,position:'relative',left:'-35px','z-index':-1,width:'2px'},
-          on:{'change':(event) => {
+        props: {icon: 'ios-cloud-upload-outline',},
+        on: {
+          click: () => {
+            document.getElementById("select-file").click();
+          }
+        }
+      }, [
+        h('input', {
+          attrs: {id: 'select-file', type: 'file'},
+          style: {opacity: 0, position: 'relative', left: '-35px', 'z-index': -1, width: '2px'},
+          on: {
+            'change': (event) => {
               param.value = '';
               document.getElementById('fileName').innerText = initText;
               param.value = event.target.files[0];
@@ -81,8 +135,8 @@ export default {
             }
           }
         }),
-        h('span', {attrs:{id:'fileName'},},initText),
-        ]);
+        h('span', {attrs: {id: 'fileName'},}, initText),
+      ]);
     },
     render_switch(h, param) {
       let _this = this;
@@ -92,7 +146,7 @@ export default {
           },
           on: {
             'on-change': (value) => {
-              _this.$nextTick(function() {
+              _this.$nextTick(function () {
                 param.value = value ? 1 : 0;
               });
             }
@@ -109,26 +163,26 @@ export default {
     render_radio(h, param) {
       let _this = this;
       return h('RadioGroup', {
-        props: {
-          value: param.value,
-        },
-        on: {
-          'on-change': (_value) => {
-            _this.$nextTick(function() {
-              param.value = _value;
-            })
-          }
-        }
-      },
-      param.params.map((radioParam) => {
-        return h('Radio', {
           props: {
-            label: radioParam.label,
-            value: param.value === radioParam.label
+            value: param.value,
           },
-        }, radioParam.text);
-      })
-    );
+          on: {
+            'on-change': (_value) => {
+              _this.$nextTick(function () {
+                param.value = _value;
+              })
+            }
+          }
+        },
+        param.params.map((radioParam) => {
+          return h('Radio', {
+            props: {
+              label: radioParam.label,
+              value: param.value === radioParam.label
+            },
+          }, radioParam.text);
+        })
+      );
     },
     render_input(h, param) {
       let _this = this;
@@ -141,7 +195,7 @@ export default {
         },
         on: {
           'on-change': (event) => {
-            _this.$nextTick(function() {
+            _this.$nextTick(function () {
               param.value = event.target.value;
             })
           }

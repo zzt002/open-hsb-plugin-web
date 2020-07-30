@@ -17,7 +17,7 @@ export default {
       {title: '请求参数', key: 'param', tooltip: true, align: 'center'},
       {title: '错误信息', key: 'message', tooltip: true, align: 'center'},
       {title: '状态', key: 'operationStatus',render: (h,params) => {
-          return h("span", [params.row.operationStatus === 1 ? h('span',{style:{color:'#00FF00'}},'成功') : h('span',{style:{color:'#FF0000'}},'失败')])},
+          return params.row.operationStatus === 1 ? h('span',{style:{color:'#00FF00'}},'成功') : h('span',{style:{color:'#FF0000'}},'失败')},
         width: '70px', align: 'center'}
     ],
     changeColumns: [

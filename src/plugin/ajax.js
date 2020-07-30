@@ -98,6 +98,18 @@ export default {
       }
     });
   },
+  download(url, fileName) {
+    return axiosInstance({
+      url: url,
+      method: 'get',
+      responseType: 'blob',
+    }).then(resp => {
+      this.downloadBlob(resp, fileName);
+    }).catch(err => {
+      this.errMethod(err);
+
+    });
+  },
 
   successMethod(resp) {
     Message.success({
@@ -110,7 +122,20 @@ export default {
       content: err.message,
       duration: 5,
     });
+  },
+  downloadBlob(resp, fileName){
+    let blob = new Blob([resp]);
+    if (navigator.msSaveOropenBlob) {
+      // ie10
+      navigator.msSaveBlob(blob, fileName);
+    } else {
+      // chrome/firefox
+      let aTag = document.createElement('a');
+      aTag.download = fileName;
+      aTag.href = URL.createObjectURL(blob);
+      aTag.click();
+      URL.revokeObjectURL(aTag);
+    }
   }
-
 };
 

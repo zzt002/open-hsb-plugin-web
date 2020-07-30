@@ -22,10 +22,11 @@ export default {
       default: () => [],
       example: () => [
         {title: 'ID', key: 'id', sortable: true, tooltip: true, width: '70px', align: 'center'},
-        {show: false, title: '修改时间', key: 'modifyDate'},
+        // 不显示在列表中的字段 不使用key关键字
+        {title: '修改时间', key1: 'modifyDate'},
         {
           title: '状态', key: 'operationStatus', render: (h, params) => {
-            return h("span", [params.row.operationStatus === 1 ? h('span', {style: {color: '#00FF00'}}, '成功') : h('span', {style: {color: '#FF0000'}}, '失败')])
+            return params.row.operationStatus === 1 ? h('span', {style: {color: '#00FF00'}}, '成功') : h('span', {style: {color: '#FF0000'}}, '失败')
           },
           width: '70px', align: 'center'
         }
@@ -96,17 +97,21 @@ export default {
           props: {
             'trigger': 'hover',
             'content': '刷新列表',
+            placement:'bottom',
           },
           style: {
             'position': 'relative',
             'left': '47%',
             'bottom': '10px',
           },
-        }, [h('a',{},[
+        }, [
           h('Icon', {
             props: {
               type: 'md-refresh',
               size: '25',
+            },
+            style:{
+              cursor: 'pointer'
             },
             on: {
               click: () => {
@@ -114,7 +119,7 @@ export default {
               }
             }
           })
-        ])]
+        ]
       )
     },
     render_table(h) {
