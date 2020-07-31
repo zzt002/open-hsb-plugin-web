@@ -1,4 +1,5 @@
 import commonForm from '../../plugin/commonForm'
+
 export default {
   name: 'openIpByExcel',
   components: {
@@ -6,18 +7,30 @@ export default {
   },
   data: () => ({
     params: [
-      {title: 'Excel文件', type: 'File', key: 'file',value:''},
-      {title: '开启权限', type: 'Switch', key: 'status',value: 1, params:{open:'开', close:'关'}},
+      {
+        title: 'Excel文件',
+        type: 'File',
+        key: 'file',
+        value: '',
+        help: {type: 'link', text: '下载模板', url: '/api/esbServiceConsumer/openIp/getExcel', fileName: '开权限模板.xls'}
+      },
+      {title: '开启权限', type: 'Switch', key: 'status', value: 1, params: {open: '开', close: '关'}},
     ]
   }),
   render(h) {
-    return h('commonForm',{
+    return h('commonForm', {
       props: {
         params: this.params,
         url: '/api/esbServiceConsumer/openIp/excel',
         method: 'post',
+      },
+      on: {
+        'successMessage1': (resp) => {
+          console.log(resp.data);
+          // console.log(resp.data.MESSAGE);
+          return JSON.stringify(resp.data.MESSAGE);
+        }
       }
-    },[
-    ]);
+    }, []);
   }
 }

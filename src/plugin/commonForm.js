@@ -212,6 +212,12 @@ export default {
             url: _this.url,
             params: _this.requestParams,
           },
+          on: {
+            'successMessage': (resp) => {
+              console.log(JSON.stringify(resp));
+              _this.$emit('successMessage1', resp);
+            }
+          }
         }, []
       );
     },

@@ -15,7 +15,8 @@ export default {
       type: Object,
       default: () => ({}),
     },
-  },
+  }
+  ,
   methods: {
     render_submit(h) {
       return h(
@@ -38,8 +39,10 @@ export default {
       _this.buttonLoading = true;
       this.$axios.post(this.url, this.params,
         function (resp) {
+          let successMessage = _this.$emit('successMessage', resp);
+          console.log("Object:" + successMessage);
           _this.$Message.success({
-            content: resp.message,
+            content: successMessage,
             duration: 5,
           });
           _this.buttonLoading = false;
@@ -47,7 +50,8 @@ export default {
         function (err) {
           _this.$Message.error({
             content: err.message,
-            duration: 5,
+            duration: 0,
+            closable: true,
           });
           _this.buttonLoading = false;
         });
