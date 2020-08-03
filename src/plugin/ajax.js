@@ -55,8 +55,8 @@ export default {
     for (let key in data) {
       formData.append(key, data[key]);
     }
-    console.log('formData:' + formData);
-    console.log('formDataS:' + JSON.stringify(formData));
+    // console.log('formData:' + formData);
+    // console.log('formDataS:' + JSON.stringify(formData));
     return formData;
   },
   post(url, data, successMethod, errMethod) {

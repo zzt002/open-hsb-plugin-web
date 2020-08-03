@@ -11,12 +11,15 @@ export default {
       type: String,
       default: '',
     },
+    method: {
+      type: String,
+      default: 'get',
+    },
     params: {
       type: Object,
       default: () => ({}),
     },
-  }
-  ,
+  },
   methods: {
     render_submit(h) {
       return h(
@@ -26,36 +29,39 @@ export default {
           },
           on: {
             click: () => {
-              this.post();
+              this.request();
             }
           }
         }, [this.submitName]
       );
     },
-    post() {
-      console.log('请求路径:' + this.url);
-      console.log('请求参数:' + JSON.stringify(this.params));
+    request() {
       let _this = this;
       _this.buttonLoading = true;
-      this.$axios.post(this.url, this.params,
+      this.$axios.ajax(this.url, this.method, this.params,
         function (resp) {
-          let successMessage = _this.$emit('successMessage', resp);
-          console.log("Object:" + successMessage);
-          _this.$Message.success({
-            content: successMessage,
-            duration: 5,
-          });
-          _this.buttonLoading = false;
+          _this.$emit('afterSuccess');
+          _this.success(resp);
         },
         function (err) {
-          _this.$Message.error({
-            content: err.message,
-            duration: 0,
-            closable: true,
-          });
-          _this.buttonLoading = false;
+          _this.error(err);
         });
     },
+    success(resp) {
+      this.$Message.success({
+        content:  resp.message,
+        duration: 5,
+      });
+      this.buttonLoading = false;
+    },
+    error(err) {
+      this.$Message.error({
+        content: err.message,
+        duration: 0,
+        closable: true,
+      });
+      this.buttonLoading = false;
+    }
   },
   render(h) {
     return this.render_submit(h);

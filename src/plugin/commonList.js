@@ -5,6 +5,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    showDrawer: {
+      type: Boolean,
+      default: true,
+    },
     url: {
       type: String,
       default: '',
@@ -35,7 +39,7 @@ export default {
   },
   data: () => ({
     detail: {},
-    showDrawer: false,
+    drawer: false,
     loading: true,
     resp_data: {
       code: {},
@@ -135,7 +139,7 @@ export default {
           on: {
             'on-row-click': (object) => {
               let _this = this;
-              this.showDrawer = true;
+              this.drawer = _this.showDrawer && true;
               this.detail = object;
               this.changeColumns.map((param) => {
                 if (_this.detail[param.key] !== undefined) {
@@ -149,12 +153,12 @@ export default {
     render_detail(h) {
       return h('Drawer', {
           props: {
-            value: this.showDrawer,
+            value: this.drawer,
             width: '640',
           },
           on: {
             'on-close': () => {
-              this.showDrawer = false;
+              this.drawer = false;
             }
           }
         },

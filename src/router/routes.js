@@ -41,7 +41,26 @@ export default [
         components: {
           home: () => import('../components/reload/reloadByExcel')
         }
+      },
+      {
+        path: '/reload',
+        components: {
+          home: () => import('../components/reload/reload')
+        }
+      },
+      {
+        path: '/taskForOpenIp',
+        components: {
+          home: () => import('../components/task/taskForOpenIp')
+        }
+      },
+      {
+        path: '/rabbit',
+        components: {
+          home: () => import('../components/other/rabbit')
+        }
       }
+
 
     ]
   }

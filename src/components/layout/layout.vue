@@ -82,7 +82,15 @@
                 重载
               </template>
               <MenuItem name="4-1" to="/reloadByExcel">EXCEL重载</MenuItem>
-              <MenuItem name="4-2">Option 2</MenuItem>
+              <MenuItem name="4-2" to="/reload">重载</MenuItem>
+            </Submenu>
+            <Submenu name="5">
+              <template slot="title">
+                <Icon type="ios-analytics"></Icon>
+                服务本机
+              </template>
+              <MenuItem name="5-1" to="/taskForOpenIp">定时任务</MenuItem>
+              <MenuItem name="5-2" to="/rabbit">RabbitMq</MenuItem>
             </Submenu>
           </Menu>
         </Sider>

@@ -8,6 +8,7 @@ export default {
   data: () => ({
     buttonLoading: false,
     requestParams: {},
+    includeFile: false,
   }),
   props: {
     url: {
@@ -22,7 +23,7 @@ export default {
       type: Array,
       default: () => [],
       example: () => [
-        {title: 'title', type: 'Input', key: 'key1', value: 'value', inputType: 'text'},
+        {title: 'title', type: 'Input', key: 'key1', value: 'value', inputType: 'text',placeholder:''},
         {
           title: 'title',
           type: 'Radio',
@@ -53,6 +54,7 @@ export default {
                 } else if (param.type === 'Radio') {
                   return _this.render_radio(h, param)
                 } else if (param.type === 'File') {
+                  _this.includeFile = true;
                   return _this.render_file(h, param)
                 } else {
                   return null;
@@ -119,12 +121,12 @@ export default {
         props: {icon: 'ios-cloud-upload-outline',},
         on: {
           click: () => {
-            document.getElementById("select-file").click();
+            document.getElementById("selectFile").click();
           }
         }
       }, [
         h('input', {
-          attrs: {id: 'select-file', type: 'file'},
+          attrs: {id: 'selectFile', type: 'file'},
           style: {opacity: 0, position: 'relative', left: '-35px', 'z-index': -1, width: '2px'},
           on: {
             'change': (event) => {
@@ -192,6 +194,7 @@ export default {
           'autosize': true,
           'value': param.value,
           'clearable': true,
+          placeholder: param.placeholder,
         },
         on: {
           'on-change': (event) => {
@@ -211,15 +214,21 @@ export default {
           props: {
             url: _this.url,
             params: _this.requestParams,
+            method: _this.method,
           },
           on: {
-            'successMessage': (resp) => {
-              console.log(JSON.stringify(resp));
-              _this.$emit('successMessage1', resp);
+            'afterSuccess': () => {
+              if (_this.includeFile) {
+                this.initSelectFile();
+              }
             }
           }
         }, []
       );
+    },
+    initSelectFile() {
+      document.getElementById('selectFile').value = '';
+      document.getElementById('fileName').innerText = '选择文件';
     },
     dealRequestParam() {
       let obj = Object.create(null);

@@ -15,7 +15,7 @@ export default {
         help: {type: 'link', text: '下载模板', url: '/api/esbServiceConsumer/openIp/getExcel', fileName: '开权限模板.xls'}
       },
       {title: '开启权限', type: 'Switch', key: 'status', value: 1, params: {open: '开', close: '关'}},
-    ]
+    ],
   }),
   render(h) {
     return h('commonForm', {
@@ -24,13 +24,6 @@ export default {
         url: '/api/esbServiceConsumer/openIp/excel',
         method: 'post',
       },
-      on: {
-        'successMessage1': (resp) => {
-          console.log(resp.data);
-          // console.log(resp.data.MESSAGE);
-          return JSON.stringify(resp.data.MESSAGE);
-        }
-      }
     }, []);
   }
 }

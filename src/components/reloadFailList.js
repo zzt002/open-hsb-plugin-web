@@ -2,7 +2,7 @@ import commonList from '../plugin/commonList'
 import commonButton from '../plugin/commonButton'
 
 export default {
-  name: 'LOG',
+  name: 'reloadFailList',
   components: {
     commonList, commonButton
   },
@@ -13,9 +13,9 @@ export default {
       [
         {title: 'ID', key: 'id', tooltip: true, width: '70px', align: 'center'},
         {title: '创建时间', key: 'createTime', tooltip: true, width: '170px', align: 'center'},
-        {title: '重载url', key: 'reloadUrl', tooltip: true},
-        {title: '重试次数', key: 'retryCount', tooltip: true},
-        {title: '错误信息', key: 'errorMessage', tooltip: true},
+        {title: '重载url', key: 'reloadUrl', tooltip: true, align: 'center'},
+        {title: '重试次数', key: 'retryCount', tooltip: true, align: 'center'},
+        {title: '错误信息', key: 'errorMessage', tooltip: true, align: 'center'},
       ],
   }),
   render(h) {
@@ -39,8 +39,8 @@ export default {
           showPage: true,
         },
         on: {
-          getRespList: (value) => {
-            this.parList = value;
+          getRespList: (data) => {
+            this.parList = data;
           }
         }
       })
