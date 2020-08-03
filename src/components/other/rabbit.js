@@ -3,8 +3,10 @@ export default {
   render(h) {
     return h('div',{},[
       h('iframe', {
-        props: {
+        attrs: {
           src: 'http://localhost:15672',
+          width: '100%',
+          height:'728px'
         }
       })]
     )
