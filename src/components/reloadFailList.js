@@ -1,5 +1,6 @@
 import commonList from '../plugin/commonList'
 import commonButton from '../plugin/commonButton'
+import commonListOperate from '../plugin/commonListOperate'
 
 export default {
   name: 'reloadFailList',
@@ -16,6 +17,7 @@ export default {
         {title: '重载url', key: 'reloadUrl', tooltip: true, align: 'center'},
         {title: '重试次数', key: 'retryCount', tooltip: true, align: 'center'},
         {title: '错误信息', key: 'errorMessage', tooltip: true, align: 'center'},
+        commonListOperate.produce(),
       ],
   }),
   render(h) {
@@ -37,6 +39,7 @@ export default {
           url: '/api/reload/fail/list',
           logColumns: this.logColumns,
           showPage: true,
+          showDrawer: false,
         },
         on: {
           getRespList: (data) => {
