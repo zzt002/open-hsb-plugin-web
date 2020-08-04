@@ -2,8 +2,8 @@
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
 
-import devEnv from "./dev.env";
-import prodEnv from "./prod.env";
+const devEnv = require("./dev.env");
+const prodEnv = require("./prod.env");
 
 const path = require('path');
 const env = process.env.NODE_ENV;
