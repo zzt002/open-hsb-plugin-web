@@ -54,11 +54,14 @@
             <Submenu :name="sub.submenu" v-if="sub.submenu !== undefined" >
               <template slot="title">
                 <Icon type="ios-navigate"></Icon>
-                <b :id="'menu' + sub.submenu">{{sub.text}}</b>
+               <b :id="'menu' + sub.submenu">{{sub.text}}</b>
               </template>
               <div style="padding:0" v-for="(item,index) in sub.menuItem" :key="index">
                 <MenuItem :name="item.name" :to="{name:item.to,params:{activeName:sub.submenu,first:sub.text,second:item.text}}"
-                             @click.native="changeBreadcurmb(sub,item)">{{item.text}}</MenuItem>
+                             @click.native="changeBreadcurmb(sub,item)">
+                  <Badge :count="failCount" v-if="item.to === 'reloadFailList'">{{item.text}}</Badge>
+                  <span v-else>{{item.text}}</span>
+                </MenuItem>
               </div>
             </Submenu>
           </Menu>
@@ -78,8 +81,10 @@
   </div>
 </template>
 <script>
+  import reloadFailList from '../reload/reloadFailList'
   export default {
     data: () => ({
+      failCount: 0,
       layoutInfo: {
         openName: '',
         active: "",
@@ -123,7 +128,12 @@
         this.layoutInfo.first = sub.text;
         this.layoutInfo.second = item.text;
         this.$store.commit('setLayoutInfo', this.layoutInfo);
-      }
+      },
+      // timer() {
+      //   this.$nextTick(()=> {
+      //     setInterval(reloadFailList.methods.refresh, 5000)
+      //   })
+      // }
     },
     mounted() {
       let layoutInfo = sessionStorage.getItem('layoutInfo');
@@ -137,6 +147,6 @@
         this.layoutInfo = JSON.parse(layoutInfo);
       }
       document.getElementById('menu' + this.layoutInfo.openName).click();
-    }
+    },
   }
 </script>

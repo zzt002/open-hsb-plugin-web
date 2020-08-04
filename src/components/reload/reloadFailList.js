@@ -20,6 +20,11 @@ export default {
         commonListOperate.produce({url:'/api/reload/fail/reload/',key:'id',text:'重载'}),
       ],
   }),
+  methods: {
+    refresh() {
+      document.getElementById('refresh').click();
+    }
+  },
   render(h) {
     return h('div', {}, [
       h('commonButton', {
@@ -36,7 +41,7 @@ export default {
         },
         on:{
           'consumeMethod':()=> {
-            document.getElementById('refresh').click();
+            this.refresh();
           }
         }
       }, []),
