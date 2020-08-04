@@ -16,6 +16,7 @@ export default {
         params: this.params,
         url: '/api/thirdParty/reload/' + this.params[0].value,
         method: 'get',
+        submitName: '重载',
       }
     },[
     ]);

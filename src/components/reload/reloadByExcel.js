@@ -17,6 +17,7 @@ export default {
         params: this.params,
         url: '/api/thirdParty/esb/reloadExcel',
         method: 'post',
+        submitName: '重载',
       }
     },[
     ]);

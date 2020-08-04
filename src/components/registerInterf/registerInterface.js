@@ -1,4 +1,4 @@
-import commonForm from '../plugin/commonForm'
+import commonForm from '../../plugin/commonForm'
 export default {
   name: 'openIp',
   data: () => ({
@@ -24,6 +24,8 @@ export default {
         props: {
           url: '/api/register/publishUnConfig',
           params: this.params,
+          submitName: '注册',
+          method: 'post',
         }
       },[])
     },

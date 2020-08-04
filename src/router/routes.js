@@ -1,5 +1,9 @@
 import LAYOUT from '@/components/layout/layout'
 
+function breadcrumb() {
+  return '<BreadcrumbItem to="">Home</BreadcrumbItem>'
+}
+
 export default [
   {
     path: '',
@@ -9,13 +13,14 @@ export default [
       {
         path: '/reloadFailList',
         components: {
-          home: () => import('../components/reloadFailList')
+          home: () => import('../components/reload/reloadFailList')
         }
       },
       {
         path: '/log',
         components: {
-          home: () => import('../components/log')
+          home: () => import('../components/other/log'),
+          breadcrumb: () => import('../components/other/log'),
         }
       },
       {
@@ -27,7 +32,7 @@ export default [
       {
         path: '/registerInterface',
         components: {
-          home: () => import('../components/registerInterface')
+          home: () => import('../components/registerInterf/registerInterface')
         }
       },
       {
@@ -58,6 +63,24 @@ export default [
         path: '/rabbit',
         components: {
           home: () => import('../components/other/rabbit')
+        }
+      },
+      {
+        path: '/deleteInterf',
+        components: {
+          home: () => import('../components/registerInterf/deleteInterf')
+        }
+      },
+      {
+        path: '/unConfigList',
+        components: {
+          home: () => import('../components/resourcePass/unConfigList')
+        }
+      },
+      {
+        path: '/api',
+        components: {
+          home: () => import('../components/other/api')
         }
       }
 

@@ -1,4 +1,4 @@
-import commonList from '../plugin/commonList'
+import commonList from '../../plugin/commonList'
 export default {
   name: 'LOG',
   components:{

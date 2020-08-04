@@ -1,26 +1,73 @@
 import axios from "./ajax";
+import {Message} from "view-design";
 
-
-let commonOperateCreate = {
-  title:'操作',
-  url:'',
-  text:'click',
+const commonOperateCreate = {
+  key: '',
+  url: '',
+  title: '操作',
+  text: 'click',
+  width: '100px',
 };
+
+let loading = false;
+
+function dealParam(inputP) {
+  for (let localKey in commonOperateCreate) {
+    for (let key in inputP) {
+      if (localKey === key) {
+        commonOperateCreate[localKey] = inputP[key];
+      }
+    }
+  }
+}
 
 
 export function produce(inputP) {
-  inputP = inputP === undefined ? commonOperateCreate : inputP;
-  return {title: inputP.title, tooltip: true, align: 'center', render: (h, params) => {
+  dealParam(inputP);
+  return {
+    title: commonOperateCreate.title, tooltip: true, align: 'center', width: commonOperateCreate.width ,render: (h, params) => {
       return h('Button', {
+        props: {
+          type: 'primary',
+          shape: 'circle',
+          ghost: true,
+          size: 'small',
+          loading: loading,
+        },
         on: {
           'click': () => {
-            alert("click ok");
-            // axios.post(this.url,null,function(resp){
-            //
-            // });
+            loading = true;
+            let url = commonOperateCreate.url;
+            if (commonOperateCreate.key !== '') {
+              url += params.row[commonOperateCreate.key];
+            }
+            axios.post(url, null,
+              function (resp) {
+                document.getElementById('refresh').click();
+                if (resp.data.indexOf("失败") > -1) {
+                  Message.error({
+                    content: resp.data,
+                    duration: 5,
+                  });
+                } else {
+                  Message.success({
+                    content: resp.data,
+                    duration: 5,
+                  });
+                }
+                loading = false;
+              },
+              function (err) {
+                Message.error({
+                  content: err.message,
+                  duration: 5,
+                });
+                loading = false;
+              }
+            );
           }
         }
-      }, inputP.text)
+      }, commonOperateCreate.text)
     }
   };
 }

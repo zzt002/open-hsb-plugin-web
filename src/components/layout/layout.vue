@@ -50,57 +50,24 @@
       </Header>
       <Layout>
         <Sider hide-trigger :style="{background: '#fff'}">
-          <Menu active-name="1-2" theme="light" width="auto" :open-names="['1']">
-            <Submenu name="1">
+          <Menu :active-name="activeName" theme="light" width="auto" :open-names="['1']" v-for="(sub) in menu">
+            <Submenu :name="sub.submenu" v-if="sub.submenu !== undefined">
               <template slot="title">
                 <Icon type="ios-navigate"></Icon>
-                列表
+                <b>{{sub.text}}</b>
               </template>
-              <MenuItem name="1-1" to="/reloadFailList">重载失败列表</MenuItem>
-              <MenuItem name="1-2" to="/log">系统日志</MenuItem>
-              <MenuItem name="1-3">Option 3</MenuItem>
-            </Submenu>
-            <Submenu name="2">
-              <template slot="title">
-                <Icon type="ios-keypad"></Icon>
-                IP权限
+              <template v-for="(item) in sub.menuItem">
+                <MenuItem :name="item.name" :to="item.to"><span @click="changeBreadcurmb(sub,item)">{{item.text}}</span></MenuItem>
               </template>
-              <MenuItem name="2-1" to="/openIp">手动开启权限</MenuItem>
-              <MenuItem name="2-2" to="/openIpByExcel">EXCEL权限</MenuItem>
-            </Submenu>
-            <Submenu name="3">
-              <template slot="title">
-                <Icon type="ios-analytics"></Icon>
-                接口注册
-              </template>
-              <MenuItem name="3-1" to="/registerInterface">接口注册</MenuItem>
-              <MenuItem name="3-2">Option 2</MenuItem>
-            </Submenu>
-            <Submenu name="4">
-              <template slot="title">
-                <Icon type="ios-analytics"></Icon>
-                重载
-              </template>
-              <MenuItem name="4-1" to="/reloadByExcel">EXCEL重载</MenuItem>
-              <MenuItem name="4-2" to="/reload">重载</MenuItem>
-            </Submenu>
-            <Submenu name="5">
-              <template slot="title">
-                <Icon type="ios-analytics"></Icon>
-                服务本机
-              </template>
-              <MenuItem name="5-1" to="/taskForOpenIp">定时任务</MenuItem>
-              <MenuItem name="5-2" to="/rabbit">RabbitMq</MenuItem>
             </Submenu>
           </Menu>
         </Sider>
         <Layout :style="{padding: '0 24px 24px'}">
           <Breadcrumb :style="{margin: '24px 0'}">
-            <BreadcrumbItem>Home</BreadcrumbItem>
-            <BreadcrumbItem>Components</BreadcrumbItem>
-            <BreadcrumbItem>Layout</BreadcrumbItem>
+            <BreadcrumbItem>{{breadcurmb.first}}</BreadcrumbItem>
+            <BreadcrumbItem>{{breadcurmb.second}}</BreadcrumbItem>
           </Breadcrumb>
-          <Content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
+          <Content :style="{padding: '24px', minHeight: '728px', background: '#fff'}">
             <router-view name="home"></router-view>
           </Content>
         </Layout>
@@ -110,6 +77,56 @@
 </template>
 <script>
   export default {
+    data: () => ({
+      activeName: '',
+      breadcurmb:{
+        first: '',
+        second: ''
+      },
+      menu:[
+        {submenu: '1',text:'工单',menuItem:[
+            {name: '1-1',to:'/unConfigList',text:'未配置列表'},
+          ]
+        },
+        {submenu: '2',text:'IP权限',menuItem:[
+            {name: '2-1',to:'/openIp',text:'手动开启权限'},
+            {name: '2-2',to:'/openIpByExcel',text:'EXCEL权限'},
+          ]
+        },
+        {submenu: '3',text:'重载',menuItem:[
+            {name: '3-1',to:'/reloadFailList',text:'重载失败列表'},
+            {name: '3-2',to:'/reload',text:'重载'},
+            {name: '3-3',to:'/reloadByExcel',text:'EXCEL重载'},
+          ]
+        },
+        {submenu: '4',text:'接口注册',menuItem:[
+            {name: '4-1',to:'/registerInterface',text:'接口注册'},
+            {name: '4-2',to:'/deleteInterf',text:'接口删除'},
+          ]
+        },
+        {submenu: '5',text:'服务本机',menuItem:[
+            {name: '5-1',to:'/log',text:'系统日志'},
+            {name: '5-2',to:'/taskForOpenIp',text:'定时任务'},
+            {name: '5-3',to:'/rabbit',text:'RabbitMq'},
+            {name: '5-4',to:'/api',text:'API'},
+          ]
+        },
 
+      ],
+    }),
+    methods: {
+      changeBreadcurmb(sub, item) {
+        this.activeName = item.name;
+        this.breadcurmb.first = sub.text;
+        this.breadcurmb.second = item.text;
+      }
+    },
+    mounted() {
+      this.activeName = this.menu[0].menuItem[0].name;
+      this.breadcurmb ={
+        first: this.menu[0].text,
+        second: this.menu[0].menuItem[0].text
+      };
+    }
   }
 </script>

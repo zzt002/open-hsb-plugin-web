@@ -1,6 +1,10 @@
 export default {
   name: 'commonList',
   props: {
+    listType: {
+      type: Number,
+      default: 1,
+    },
     showPage: {
       type: Boolean,
       default: true,
@@ -49,24 +53,31 @@ export default {
       },
     },
     param: {
-      type: Object,
-      default: () => ({
-        order: 1,
-        pageNum: 1,
-        pageSize: 10,
-      })
+      order: 1,
+      pageNum: 1,
+      pageSize: 10,
     },
   }),
   methods: {
     list() {
       let _this = this;
-      this.$axios.get(this.url, this.param.default(),
-        function (resp) {
-          _this.resp_data = resp;
-          _this.loading = false;
-          _this.$emit('getRespList', resp.data.list);
-        },
-      );
+      if (this.listType === 1) {
+        this.$axios.get(this.url, this.param,
+          function (resp) {
+            _this.resp_data = resp;
+            _this.loading = false;
+            _this.$emit('getRespList', resp.data.list);
+          },
+        );
+      } else {
+        this.$axios.get(this.url, null,
+          function (resp) {
+            _this.resp_data.data.list = resp.data;
+            _this.loading = false;
+            _this.$emit('getRespList', resp.data);
+          },
+        );
+      }
     },
     render_page(h) {
       if (!this.showPage) return;
@@ -110,6 +121,9 @@ export default {
           },
         }, [
           h('Icon', {
+            attrs:{
+              id:'refresh'
+            },
             props: {
               type: 'md-refresh',
               size: '25',

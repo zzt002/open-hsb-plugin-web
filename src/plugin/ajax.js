@@ -48,6 +48,8 @@ export default {
       this.get(url, data, successMethod, errMethod);
     } else if (method === 'post') {
       this.post(url, data, successMethod, errMethod);
+    } else if (method === 'delete') {
+      this.delete(url, data, successMethod, errMethod);
     }
   },
   dealPostData(data) {
@@ -64,6 +66,26 @@ export default {
     return axiosInstance({
       url: url,
       method: 'post',
+      data: formData,
+    }).then(resp => {
+      if (successMethod === undefined) {
+        this.successMethod(resp);
+      } else {
+        successMethod(resp);
+      }
+    }).catch(err => {
+      if (errMethod === undefined) {
+        this.errMethod(err);
+      } else {
+        errMethod(err);
+      }
+    });
+  },
+  delete(url, data, successMethod, errMethod) {
+    let formData = this.dealPostData(data);
+    return axiosInstance({
+      url: url,
+      method: 'delete',
       data: formData,
     }).then(resp => {
       if (successMethod === undefined) {

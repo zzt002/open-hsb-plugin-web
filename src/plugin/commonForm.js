@@ -19,6 +19,18 @@ export default {
       type: String,
       default: 'get',
     },
+    submitName: {
+      type: String,
+      default: '提交',
+    },
+    confirmMessage: {
+      type: String,
+      default: 'Are you sure?',
+    },
+    showConfirm: {
+      type: Boolean,
+      default: false,
+    },
     params: {
       type: Array,
       default: () => [],
@@ -149,7 +161,7 @@ export default {
           on: {
             'on-change': (value) => {
               _this.$nextTick(function () {
-                param.value = value ? 1 : 0;
+                param.value = (value ? 1 : 0);
               });
             }
           }
@@ -208,13 +220,16 @@ export default {
     render_submit(h) {
       let _this = this;
       this.dealRequestParam();
-      console.log('参数处理后:' + JSON.stringify(this.requestParams));
+      // console.log('参数处理后:' + JSON.stringify(this.requestParams));
       return h(
         'commonButton', {
           props: {
             url: _this.url,
             params: _this.requestParams,
             method: _this.method,
+            submitName: _this.submitName,
+            showConfirm: _this.showConfirm,
+            confirmMessage: _this.confirmMessage,
           },
           on: {
             'afterSuccess': () => {

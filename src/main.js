@@ -7,6 +7,7 @@ import axios from './plugin/ajax'
 
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
+Vue.prototype.baseUrl = 'http://10.54.66.81';
 
 /* eslint-disable no-new */
 new Vue({

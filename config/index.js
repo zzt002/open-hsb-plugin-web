@@ -2,7 +2,17 @@
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
 
+import devEnv from "./dev.env";
+import prodEnv from "./prod.env";
+
 const path = require('path');
+const env = process.env.NODE_ENV;
+let target = '';
+if (env === 'development') {
+  target = devEnv.API_URL;
+} else if (env === 'production') {
+  target = prodEnv.API_URL;
+}
 
 module.exports = {
   dev: {
@@ -12,7 +22,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target:'http://10.54.66.81:9090',
+        target: target,
         changeOrigin: true,
         pathRewrite: {
           '^/api':''
