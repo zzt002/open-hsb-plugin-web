@@ -50,83 +50,93 @@
       </Header>
       <Layout>
         <Sider hide-trigger :style="{background: '#fff'}">
-          <Menu :active-name="activeName" theme="light" width="auto" :open-names="['1']" v-for="(sub) in menu">
-            <Submenu :name="sub.submenu" v-if="sub.submenu !== undefined">
+          <Menu :active-name="layoutInfo.active" theme="light" width="auto" :open-names="[]" v-for="(sub,index) in menu" :key="index">
+            <Submenu :name="sub.submenu" v-if="sub.submenu !== undefined" >
               <template slot="title">
                 <Icon type="ios-navigate"></Icon>
-                <b>{{sub.text}}</b>
+                <b :id="'menu' + sub.submenu">{{sub.text}}</b>
               </template>
-              <template v-for="(item) in sub.menuItem">
-                <MenuItem :name="item.name" :to="item.to"><span @click="changeBreadcurmb(sub,item)">{{item.text}}</span></MenuItem>
-              </template>
+              <div style="padding:0" v-for="(item,index) in sub.menuItem" :key="index">
+                <MenuItem :name="item.name" :to="{name:item.to,params:{activeName:sub.submenu,first:sub.text,second:item.text}}"
+                             @click.native="changeBreadcurmb(sub,item)">{{item.text}}</MenuItem>
+              </div>
             </Submenu>
           </Menu>
         </Sider>
         <Layout :style="{padding: '0 24px 24px'}">
           <Breadcrumb :style="{margin: '24px 0'}">
-            <BreadcrumbItem>{{breadcurmb.first}}</BreadcrumbItem>
-            <BreadcrumbItem>{{breadcurmb.second}}</BreadcrumbItem>
+            <BreadcrumbItem>{{this.layoutInfo.first}}</BreadcrumbItem>
+            <BreadcrumbItem>{{this.layoutInfo.second}}</BreadcrumbItem>
           </Breadcrumb>
-          <Content :style="{padding: '24px', minHeight: '728px', background: '#fff'}">
+          <Content :style="{padding: '24px', minHeight: '700px', background: '#fff'}">
             <router-view name="home"></router-view>
           </Content>
         </Layout>
       </Layout>
+      <Footer class="layout-footer-center">Copyright &copy; 2019-2020</Footer>
     </Layout>
   </div>
 </template>
 <script>
   export default {
     data: () => ({
-      activeName: '',
-      breadcurmb:{
-        first: '',
-        second: ''
+      layoutInfo: {
+        openName: '',
+        active: "",
+        first: "",
+        second: "",
       },
       menu:[
         {submenu: '1',text:'工单',menuItem:[
-            {name: '1-1',to:'/unConfigList',text:'未配置列表'},
+            {name: '1-1',to:'unConfigList',text:'未配置列表'},
           ]
         },
         {submenu: '2',text:'IP权限',menuItem:[
-            {name: '2-1',to:'/openIp',text:'手动开启权限'},
-            {name: '2-2',to:'/openIpByExcel',text:'EXCEL权限'},
+            {name: '2-1',to:'openIp',text:'手动开启权限'},
+            {name: '2-2',to:'openIpByExcel',text:'EXCEL权限'},
           ]
         },
         {submenu: '3',text:'重载',menuItem:[
-            {name: '3-1',to:'/reloadFailList',text:'重载失败列表'},
-            {name: '3-2',to:'/reload',text:'重载'},
-            {name: '3-3',to:'/reloadByExcel',text:'EXCEL重载'},
+            {name: '3-1',to:'reloadFailList',text:'重载失败列表'},
+            {name: '3-2',to:'reload',text:'重载'},
+            {name: '3-3',to:'reloadByExcel',text:'EXCEL重载'},
           ]
         },
         {submenu: '4',text:'接口注册',menuItem:[
-            {name: '4-1',to:'/registerInterface',text:'接口注册'},
-            {name: '4-2',to:'/deleteInterf',text:'接口删除'},
+            {name: '4-1',to:'registerInterface',text:'接口注册'},
+            {name: '4-2',to:'deleteInterf',text:'接口删除'},
           ]
         },
         {submenu: '5',text:'服务本机',menuItem:[
-            {name: '5-1',to:'/log',text:'系统日志'},
-            {name: '5-2',to:'/taskForOpenIp',text:'定时任务'},
-            {name: '5-3',to:'/rabbit',text:'RabbitMq'},
-            {name: '5-4',to:'/api',text:'API'},
+            {name: '5-1',to:'log',text:'系统日志'},
+            {name: '5-2',to:'taskForOpenIp',text:'定时任务'},
+            {name: '5-3',to:'rabbit',text:'RabbitMq'},
+            {name: '5-4',to:'api',text:'API'},
           ]
         },
-
       ],
     }),
     methods: {
       changeBreadcurmb(sub, item) {
-        this.activeName = item.name;
-        this.breadcurmb.first = sub.text;
-        this.breadcurmb.second = item.text;
+        this.layoutInfo.openName = sub.submenu;
+        this.layoutInfo.active = item.name;
+        this.layoutInfo.first = sub.text;
+        this.layoutInfo.second = item.text;
+        this.$store.commit('setLayoutInfo', this.layoutInfo);
       }
     },
     mounted() {
-      this.activeName = this.menu[0].menuItem[0].name;
-      this.breadcurmb ={
-        first: this.menu[0].text,
-        second: this.menu[0].menuItem[0].text
-      };
+      let layoutInfo = sessionStorage.getItem('layoutInfo');
+      if (layoutInfo === null) {
+        this.layoutInfo.openName = this.menu[0].submenu;
+        this.layoutInfo.active = this.menu[0].menuItem[0].name;
+        this.layoutInfo.first =  this.menu[0].text;
+        this.layoutInfo.second = this.menu[0].menuItem[0].text;
+        this.$router.push(this.menu[0].menuItem[0].to);
+      } else {
+        this.layoutInfo = JSON.parse(layoutInfo);
+      }
+      document.getElementById('menu' + this.layoutInfo.openName).click();
     }
   }
 </script>

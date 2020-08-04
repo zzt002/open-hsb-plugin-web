@@ -1,7 +1,6 @@
 import commonList from '../../plugin/commonList'
 import commonButton from '../../plugin/commonButton'
 import axios from '../../plugin/ajax'
-import Vue from 'vue'
 
 export default {
   name: 'taskForOpenIp',
@@ -37,7 +36,6 @@ export default {
         },
       ],
   }),
-
   render(h) {
     return h('div', {}, [
       h('commonList', {

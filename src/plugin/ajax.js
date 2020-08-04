@@ -2,7 +2,7 @@ import axios from 'axios'
 import {Message} from 'view-design'
 
 const axiosInstance = axios.create({
-  timeout: 20000,
+  timeout: 5000,
 });
 
 axiosInstance.interceptors.request.use(
