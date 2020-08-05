@@ -5,5 +5,5 @@ const Vue = require('Vue')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  API_URL: Vue.prototype.baseUrl + ':9090/',
+  API_URL: Vue.prototype.baseUrl + ':9999/',
 })

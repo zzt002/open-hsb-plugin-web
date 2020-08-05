@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {Message} from 'view-design'
+import router from '../router'
 
 const axiosInstance = axios.create({
   timeout: 5000,
@@ -8,6 +9,8 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (conf) => {
     // console.log('conf:' + JSON.stringify(conf));
+    let token = localStorage.getItem("token");
+    conf.headers['token'] = token;
     return conf;
   },
   (err) => {
@@ -18,7 +21,9 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (resp) => {
-    // console.log('response:' + JSON.stringify(resp.data));
+    if (resp.data.code === 401) {
+      router.push('/login');
+    }
     return resp.data;
   },
   (err) => {

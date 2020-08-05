@@ -9,7 +9,7 @@ import store from './store/index'
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
 Vue.prototype.$store = store;
-Vue.prototype.baseUrl = 'http://10.54.66.81';
+Vue.prototype.baseUrl = 'http://localhost';
 
 /* eslint-disable no-new */
 new Vue({

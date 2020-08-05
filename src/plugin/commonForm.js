@@ -15,6 +15,10 @@ export default {
       type: String,
       default: '',
     },
+    login: {
+      type: Boolean,
+      default: false,
+    },
     method: {
       type: String,
       default: 'get',
@@ -199,14 +203,17 @@ export default {
       );
     },
     render_input(h, param) {
+      let clearable = param.clearable === undefined ? true : param.clearable;
+      let password = param.password === undefined ? false : param.password;
       let _this = this;
       return h('Input', {
         props: {
           'type': param.inputType,
           'autosize': true,
           'value': param.value,
-          'clearable': true,
+          'clearable': clearable,
           placeholder: param.placeholder,
+          password: password,
         },
         on: {
           'on-change': (event) => {
@@ -230,6 +237,7 @@ export default {
             submitName: _this.submitName,
             showConfirm: _this.showConfirm,
             confirmMessage: _this.confirmMessage,
+            login: _this.login,
           },
           on: {
             'afterSuccess': () => {

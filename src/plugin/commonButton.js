@@ -8,6 +8,10 @@ export default {
       type: String,
       default: '提交',
     },
+    login: {
+      type: Boolean,
+      default: false,
+    },
     url: {
       type: String,
       default: '',
@@ -88,6 +92,10 @@ export default {
         });
     },
     success(resp) {
+      if(this.login && resp.code === 55) {
+        localStorage.setItem("token", resp.data.token);
+        this.$router.push('/');
+      }
       this.$Message.success({
         content: resp.message,
         duration: 5,

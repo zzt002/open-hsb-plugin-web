@@ -1,6 +1,12 @@
 import LAYOUT from '@/components/layout/layout'
+import LOGIN from '@/components/login/login'
 
 export default [
+  {
+    path: '/login',
+    name: 'LOGIN',
+    component: LOGIN,
+  },
   {
     path: '',
     name: 'LAYOUT',
