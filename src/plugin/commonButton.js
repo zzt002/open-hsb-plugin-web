@@ -85,6 +85,7 @@ export default {
     request() {
       let _this = this;
       _this.buttonLoading = true;
+      console.log('requestParams:' + JSON.stringify(this.params));
       this.$axios.ajax(this.url, this.method, this.params,
         function (resp) {
           _this.$emit('afterSuccess');
@@ -111,7 +112,7 @@ export default {
     error(err) {
       this.$Message.error({
         content: err.message,
-        duration: 20,
+        duration: 10,
         closable: true,
       });
       this.buttonLoading = false;

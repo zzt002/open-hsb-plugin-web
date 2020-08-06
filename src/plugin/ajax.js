@@ -37,10 +37,10 @@ axiosInstance.interceptors.response.use(
           err.message = resp.message;
           break;
         case 500:
-          err.message = resp.message;
+          err.message = "服务异常";
           break;
         default:
-          err.message = "服务异常";
+          err.message = "ERROR";
       }
     }
     return Promise.reject(err);

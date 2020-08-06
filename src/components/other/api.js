@@ -11,8 +11,5 @@ export default {
         })
       ]
     )
-  },
-  mounted() {
-    console.log("5:" +  process.env.API_URL);
-  },
+  }
 }

@@ -7,6 +7,7 @@ export default {
   },
   data: () => ({
     buttonLoading: false,
+    paramsMap: new Map(),
     requestParams: {},
     includeFile: false,
   }),
@@ -126,7 +127,7 @@ export default {
                   }
                   }}, param.help.text);
               } else if (param.help.type === 'text') {
-                return h('span', {}, param.help.text);
+                 return h('span', {}, param.help.text);
               }
             })()]
           )
@@ -148,10 +149,10 @@ export default {
           style: {opacity: 0, position: 'relative', left: '-35px', 'z-index': -1, width: '2px'},
           on: {
             'change': (event) => {
-              param.value = '';
+              this.delParamsMap(param.key);
               document.getElementById('fileName').innerText = initText;
-              param.value = event.target.files[0];
-              document.getElementById('fileName').innerText = param.value.name;
+              this.setParamsMap(param.key, event.target.files[0]);
+              document.getElementById('fileName').innerText = event.target.files[0].name;
             }
           }
         }),
@@ -166,9 +167,7 @@ export default {
           },
           on: {
             'on-change': (value) => {
-              _this.$nextTick(function () {
-                param.value = (value ? 1 : 0);
-              });
+              this.setParamsMap(param.key, value ? 1 : 0);
             }
           }
         }, [
@@ -188,9 +187,7 @@ export default {
           },
           on: {
             'on-change': (_value) => {
-              _this.$nextTick(function () {
-                param.value = _value;
-              })
+              this.setParamsMap(param.key, _value);
             }
           }
         },
@@ -209,9 +206,6 @@ export default {
       let password = param.password === undefined ? false : param.password;
       let _this = this;
       return h('Input', {
-        attrs: {
-          id: 'input' + param.index
-        },
         props: {
           'type': param.inputType,
           'autosize': true,
@@ -221,17 +215,23 @@ export default {
           password: password,
         },
         on: {
-          'on-blur': (event) => {
-              // document.getElementById('input' + param.index).value = event.target.value;
-            param.value = event.target.value;
+          'on-change': (event) => {
+            this.setParamsMap(param.key, event.target.value);
           }
         }
       }, [])
     },
+    setParamsMap(key, value) {
+      this.paramsMap.set(key, value);
+      this.dealRequestParams();
+    },
+    delParamsMap(key) {
+      this.paramsMap.delete(key);
+      this.dealRequestParams();
+    },
     render_submit(h) {
+      this.initRequestParams;
       let _this = this;
-      this.dealRequestParam();
-      // console.log('参数处理后:' + JSON.stringify(this.requestParams));
       return h(
         'commonButton', {
           props: {
@@ -257,11 +257,19 @@ export default {
       document.getElementById('selectFile').value = '';
       document.getElementById('fileName').innerText = '选择文件';
     },
-    dealRequestParam() {
-      let obj = Object.create(null);
-      this.params.map((_param) => {
-        obj[_param.key] = _param.value;
+    initRequestParams() {
+      this.params.map((param) => {
+        if (param.key !== undefined) {
+          this.paramsMap.set(param.key, param.value);
+        }
       });
+      this.dealRequestParams();
+    },
+    dealRequestParams() {
+      let obj = Object.create(null);
+      for(let [key,value] of this.paramsMap) {
+        obj[key] = value;
+      }
       this.requestParams = obj;
     }
   },
@@ -280,5 +288,8 @@ export default {
       h('br'),
       this.render_submit(h),
     ]);
+  },
+  mounted() {
+    this.initRequestParams();
   }
 }
