@@ -37,6 +37,9 @@ export default {
     render_submit(h) {
       return h(
         'Button', {
+          attrs:{
+            id:'submitButton',
+          },
           props: {
             loading: this.buttonLoading,
             // type: 'success',
@@ -51,7 +54,7 @@ export default {
                 this.request();
               }
               this.$emit('consumeMethod');
-            }
+            },
           }
         }, [this.submitName]
       );
@@ -93,7 +96,10 @@ export default {
     },
     success(resp) {
       if(this.login && resp.code === 55) {
+        // 55 为登录返回code
         localStorage.setItem("token", resp.data.token);
+        localStorage.setItem("name", resp.data.name);
+        localStorage.setItem("exp", resp.data.exp);
         this.$router.push('/');
       }
       this.$Message.success({

@@ -262,7 +262,16 @@ export default {
     }
   },
   render(h) {
-    return h('div', {}, [
+    return h('div', {
+      on:{
+        'keydown':(e)=>{
+          // 回车事件
+          if (e.keyCode === 13) {
+            document.getElementById('submitButton').click();
+          }
+        }
+      }
+    }, [
       this.render_list(h),
       h('br'),
       this.render_submit(h),
