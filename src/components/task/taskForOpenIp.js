@@ -15,7 +15,7 @@ export default {
         // {title: 'ID', key: 'id', tooltip: true, width: '70px', align: 'center'},
         {title: '名称', key: 'name', tooltip: true, width: '170px', align: 'center'},
         {title: '描述', key: 'description', tooltip: true, align: 'center'},
-        {title: '项数天数', key: 'limit', tooltip: true, align: 'center'},
+        {title: '天数', key: 'limit', tooltip: true, align: 'center'},
         {
           title: '状态', key: 'open', tooltip: true, align: 'center',render: (h, params) => {
             return h('i-switch', {

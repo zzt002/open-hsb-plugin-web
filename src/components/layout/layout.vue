@@ -7,19 +7,25 @@
     overflow: hidden;
   }
   .layout-logo{
-    width: 100px;
-    height: 30px;
-    background: #5b6270;
+    width: 300px;
+    height: 50px;
+    background: #FFFFFF;
     border-radius: 3px;
     float: left;
     position: relative;
-    top: 15px;
+    top: 10px;
     left: 20px;
+    padding: 0px 5px;
+    font-size: 30px;
   }
   .layout-nav{
-    width: 100px;
+    width: 200px;
     margin: 0 auto;
     margin-right: 0px;
+  }
+  .layout-exit{
+    position: fixed;
+    right: 30px;
   }
 </style>
 <template>
@@ -27,11 +33,16 @@
     <Layout>
       <Header>
         <Menu mode="horizontal" theme="dark" active-name="1">
-          <div class="layout-logo"></div>
+          <div class="layout-logo">HSB PLUGIN</div>
           <div class="layout-nav">
             <MenuItem name="1">
               <Icon type="ios-contact" size="20"></Icon>
               {{username}}
+            </MenuItem>
+          </div>
+          <div class="layout-exit">
+            <MenuItem name="2">
+              <Icon type="md-exit" size="20" @click="exit()"></Icon>
             </MenuItem>
           </div>
         </Menu>
@@ -127,6 +138,9 @@
       },
       loginTimer() {
           setInterval(this.loginCheck, 1000)
+      },
+      exit() {
+        localStorage.removeItem("exp");
       }
     },
     mounted() {

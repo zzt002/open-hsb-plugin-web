@@ -10,9 +10,14 @@ export default {
     paramsMap: new Map(),
     requestParams: {},
     includeFile: false,
+    requestUrl:'',
   }),
   props: {
     url: {
+      type: String,
+      default: '',
+    },
+    urlKey: {
       type: String,
       default: '',
     },
@@ -213,6 +218,7 @@ export default {
           'clearable': clearable,
           placeholder: param.placeholder,
           password: password,
+          required:true,
         },
         on: {
           'on-change': (event) => {
@@ -224,18 +230,21 @@ export default {
     setParamsMap(key, value) {
       this.paramsMap.set(key, value);
       this.dealRequestParams();
+      // urlKey 用作动态的路径拼接
+      if (this.urlKey !== '' && this.urlKey === key) {
+        this.requestUrl = this.url + value;
+      }
     },
     delParamsMap(key) {
       this.paramsMap.delete(key);
       this.dealRequestParams();
     },
     render_submit(h) {
-      this.initRequestParams;
       let _this = this;
       return h(
         'commonButton', {
           props: {
-            url: _this.url,
+            url: _this.requestUrl,
             params: _this.requestParams,
             method: _this.method,
             submitName: _this.submitName,
@@ -265,6 +274,9 @@ export default {
       });
       this.dealRequestParams();
     },
+    initRequestUrl() {
+      this.requestUrl = this.url;
+    },
     dealRequestParams() {
       let obj = Object.create(null);
       for(let [key,value] of this.paramsMap) {
@@ -291,5 +303,6 @@ export default {
   },
   mounted() {
     this.initRequestParams();
+    this.initRequestUrl();
   }
 }

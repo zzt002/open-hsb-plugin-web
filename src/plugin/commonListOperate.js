@@ -39,7 +39,7 @@ export function produce(inputP) {
             loading = true;
             let url = commonOperateCreate.url;
             if (commonOperateCreate.key !== '') {
-              url += params.row[commonOperateCreate.key];
+              url = url + params.row[commonOperateCreate.key];
             }
             axios.post(url, null,
               function (resp) {
