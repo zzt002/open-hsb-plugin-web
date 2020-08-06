@@ -126,7 +126,7 @@
         }
       },
       loginTimer() {
-          setInterval(this.loginCheck, 5000)
+          setInterval(this.loginCheck, 1000)
       }
     },
     mounted() {

@@ -14,7 +14,7 @@ export default {
     return h('commonForm',{
       props: {
         params: this.params,
-        url: '/api/thirdParty/reload/' + this.params[0].value,
+        url: '/thirdParty/reload/' + this.params[0].value,
         method: 'get',
         submitName: '重载',
       }

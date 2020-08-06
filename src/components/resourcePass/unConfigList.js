@@ -22,7 +22,7 @@ export default {
       {title: '配置信息', key: 'implRecord', tooltip: true, align: 'center'},
       // {title: '配置人ID', key: 'modifyUserId', tooltip: true, align: 'center', width: '70px',},
       // {title: '状态', key: 'sts', tooltip: true, align: 'center', width: '70px',},
-      commonListOperate.produce({url:'/api/resourcePass/openIpByImplNum/',key:'implNum',text:'配置',width:'90px'}),
+      commonListOperate.produce({url:'/resourcePass/openIpByImplNum/',key:'implNum',text:'配置',width:'90px'}),
     ],
     numList: [
       {
@@ -68,7 +68,7 @@ export default {
               display: 'inline',
             },
             props: {
-              url: '/api/resourcePass/openIpAuto' + this.day,
+              url: '/resourcePass/openIpAuto' + this.day,
               submitName: '自动配置',
               method: 'post',
             },
@@ -123,7 +123,7 @@ export default {
       this.render_changeUnconfig(h),
       h('commonList', {
         props: {
-          url: '/api/resourcePass/listOfUnset' + this.listNum + '?type=' + this.unConfigType,
+          url: '/resourcePass/listOfUnset' + this.listNum + '?type=' + this.unConfigType,
           logColumns: this.logColumns,
           showPage: false,
           showDrawer: false,

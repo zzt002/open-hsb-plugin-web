@@ -54,7 +54,8 @@ export default {
   methods: {
     render_list(h) {
       let _this = this;
-      return h('div', {}, this.params.map((param) => {
+      return h('div', {},
+        this.params.map((param) => {
           return h('div', {}, [
             h('h3', {}, param.title),
             (
@@ -76,9 +77,10 @@ export default {
                   return null;
                 }
               }
-            )()]);
-        })
-      );
+            )()
+          ]);
+        }
+      ));
     },
     render_file(h, param) {
       return h('div', {}, [
@@ -207,6 +209,9 @@ export default {
       let password = param.password === undefined ? false : param.password;
       let _this = this;
       return h('Input', {
+        attrs: {
+          id: 'input' + param.index
+        },
         props: {
           'type': param.inputType,
           'autosize': true,
@@ -216,10 +221,9 @@ export default {
           password: password,
         },
         on: {
-          'on-change': (event) => {
-            _this.$nextTick(function () {
-              param.value = event.target.value;
-            })
+          'on-blur': (event) => {
+              // document.getElementById('input' + param.index).value = event.target.value;
+            param.value = event.target.value;
           }
         }
       }, [])

@@ -22,7 +22,7 @@ export default {
               props: {value: params.row.open === '1',},
               on: {
                 'on-change': () => {
-                  let url = '/api/taskConfig/change/' + params.row.id;
+                  let url = '/taskConfig/change/' + params.row.id;
                   axios.post(url,null,function(resp){
                       params.row.open = resp.data;
                   });
@@ -40,7 +40,7 @@ export default {
     return h('div', {}, [
       h('commonList', {
         props: {
-          url: '/api/taskConfig/list',
+          url: '/taskConfig/list',
           logColumns: this.logColumns,
           showPage: true,
           showDrawer: false,

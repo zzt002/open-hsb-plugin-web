@@ -17,7 +17,7 @@ export default {
         {title: '重载url', key: 'reloadUrl', tooltip: true, align: 'center'},
         {title: '重试次数', key: 'retryCount', tooltip: true, align: 'center'},
         {title: '错误信息', key: 'errorMessage', tooltip: true, align: 'center'},
-        commonListOperate.produce({url:'/api/reload/fail/reload/',key:'id',text:'重载'}),
+        commonListOperate.produce({url:'/reload/fail/reload/',key:'id',text:'重载'}),
       ],
   }),
   methods: {
@@ -35,7 +35,7 @@ export default {
           display: this.parList === null || this.parList === undefined || this.parList.length === 0 ? 'none' : 'inline',
         },
         props: {
-          url: '/api/reload/fail/reload/all',
+          url: '/reload/fail/reload/all',
           submitName: '一键重载',
           method: 'post',
         },
@@ -47,7 +47,7 @@ export default {
       }, []),
       h('commonList', {
         props: {
-          url: '/api/reload/fail/list',
+          url: '/reload/fail/list',
           logColumns: this.logColumns,
           showPage: true,
           showDrawer: false,

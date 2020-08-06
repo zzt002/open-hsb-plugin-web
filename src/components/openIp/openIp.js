@@ -15,7 +15,7 @@ export default {
     return h('commonForm',{
       props: {
         params: this.params,
-        url: '/api/esbServiceConsumer/openIp',
+        url: '/esbServiceConsumer/openIp',
         method: 'post',
       }
     },[

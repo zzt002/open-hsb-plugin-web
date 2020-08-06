@@ -22,7 +22,7 @@ export default {
     render_list(h) {
       return h("commonForm",{
         props: {
-          url: '/api/register/publishUnConfig',
+          url: '/register/publishUnConfig',
           params: this.params,
           submitName: '注册',
           method: 'post',

@@ -27,7 +27,7 @@ export default {
   render(h) {
     return h('commonList',{
       props: {
-        url: '/api/log/list',
+        url: '/log/list',
         logColumns: this.logColumns,
         showPage: true,
         changeColumns: this.changeColumns,

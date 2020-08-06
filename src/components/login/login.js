@@ -25,7 +25,7 @@ export default {
           h('commonForm', {
             props: {
               params: this.params,
-              url: '/api/login',
+              url: '/login',
               method: 'post',
               submitName: '登录',
               login: true,
@@ -51,5 +51,5 @@ export default {
       ]
     )
       ;
-  }
+  },
 }

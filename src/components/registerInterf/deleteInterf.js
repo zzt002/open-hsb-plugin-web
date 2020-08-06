@@ -14,7 +14,7 @@ export default {
     return h('commonForm',{
       props: {
         params: this.params,
-        url: '/api/register/del',
+        url: '/register/del',
         method: 'delete',
         submitName: '删除',
         showConfirm: true,

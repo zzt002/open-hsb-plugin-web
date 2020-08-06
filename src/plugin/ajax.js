@@ -4,6 +4,7 @@ import router from '../router'
 
 const axiosInstance = axios.create({
   timeout: 5000,
+  baseURL: process.env.NODE_ENV === "production" ? (process.env.API_URL + ":" + process.env.URL_PORT) : "/api"
 });
 
 axiosInstance.interceptors.request.use(
@@ -39,7 +40,7 @@ axiosInstance.interceptors.response.use(
           err.message = resp.message;
           break;
         default:
-          err.message = `服务器异常`;
+          err.message = "服务异常";
       }
     }
     return Promise.reject(err);

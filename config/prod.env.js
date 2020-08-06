@@ -1,5 +1,6 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
-  API_URL: 'http://localhost:9999/',
+  API_URL: '"http://localhost"',
+  URL_PORT: 9090,
 }

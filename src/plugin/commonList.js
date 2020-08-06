@@ -16,7 +16,7 @@ export default {
     url: {
       type: String,
       default: '',
-      example: '/api/log/list',
+      example: '/log/list',
     },
     changeColumns: {
       type: Array,

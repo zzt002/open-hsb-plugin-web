@@ -5,11 +5,13 @@ import App from './App'
 import router from './router'
 import axios from './plugin/ajax'
 import store from './store/index'
+import "babel-polyfill"
 
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
 Vue.prototype.$store = store;
-Vue.prototype.baseUrl = 'http://localhost';
+
+Vue.prototype.$url = process.env.API_URL
 
 /* eslint-disable no-new */
 new Vue({
