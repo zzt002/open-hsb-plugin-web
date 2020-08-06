@@ -17,9 +17,9 @@
     left: 20px;
   }
   .layout-nav{
-    width: 420px;
+    width: 100px;
     margin: 0 auto;
-    margin-right: 20px;
+    margin-right: 0px;
   }
 </style>
 <template>
@@ -30,20 +30,8 @@
           <div class="layout-logo"></div>
           <div class="layout-nav">
             <MenuItem name="1">
-              <Icon type="ios-navigate"></Icon>
-              Item 1
-            </MenuItem>
-            <MenuItem name="2">
-              <Icon type="ios-keypad"></Icon>
-              Item 2
-            </MenuItem>
-            <MenuItem name="3">
-              <Icon type="ios-analytics"></Icon>
-              Item 3
-            </MenuItem>
-            <MenuItem name="4">
-              <Icon type="ios-paper"></Icon>
-              Item 4
+              <Icon type="ios-contact" size="20"></Icon>
+              {{username}}
             </MenuItem>
           </div>
         </Menu>
@@ -84,6 +72,7 @@
   import reloadFailList from '../reload/reloadFailList'
   export default {
     data: () => ({
+      username: localStorage.getItem('name') === '' ? '无名' : localStorage.getItem('name'),
       failCount: 0,
       layoutInfo: {
         openName: '',
@@ -129,13 +118,20 @@
         this.layoutInfo.second = item.text;
         this.$store.commit('setLayoutInfo', this.layoutInfo);
       },
-      // timer() {
-      //   this.$nextTick(()=> {
-      //     setInterval(reloadFailList.methods.refresh, 5000)
-      //   })
-      // }
+      loginCheck() {
+        let currentMills = new Date().getTime();
+        let exp = localStorage.getItem('exp');
+        if (exp === undefined || currentMills > exp) {
+          this.$router.push('/login');
+        }
+      },
+      loginTimer() {
+          setInterval(this.loginCheck, 5000)
+      }
     },
     mounted() {
+      this.loginTimer();
+
       let layoutInfo = sessionStorage.getItem('layoutInfo');
       if (layoutInfo === null) {
         this.layoutInfo.openName = this.menu[0].submenu;
