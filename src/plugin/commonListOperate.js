@@ -44,18 +44,11 @@ export function produce(inputP) {
             axios.post(url, null,
               function (resp) {
                 document.getElementById('refresh').click();
-                if (resp.data.indexOf("失败") > -1) {
-                  Message.error({
-                    content: resp.data,
+                  Message.info({
+                    content: resp.message,
                     duration: 5,
                   });
-                } else {
-                  Message.success({
-                    content: resp.data,
-                    duration: 5,
-                  });
-                }
-                loading = false;
+                  loading = false;
               },
               function (err) {
                 Message.error({
