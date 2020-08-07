@@ -22,9 +22,22 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (resp) => {
-    if (resp.data.code === 401) {
-      router.push('/login');
+    switch(resp.data.code){
+      case 401:
+        router.push('/login');
+        break;
+      case 55:
+        // 55 为登录返回code
+        localStorage.setItem("token", resp.data.data.token);
+        localStorage.setItem("name", resp.data.data.name);
+        localStorage.setItem("exp", resp.data.data.exp);
+        router.push('/');
+        break;
+      case 555:
+        resp.message = resp.data.message;
+        return Promise.reject(resp);
     }
+
     return resp.data;
   },
   (err) => {
@@ -37,7 +50,10 @@ axiosInstance.interceptors.response.use(
           err.message = resp.message;
           break;
         case 500:
-          err.message = "服务异常";
+          err.message = "服务返回异常";
+          break;
+        case 504:
+          err.message = "网络异常";
           break;
         default:
           err.message = "ERROR";
@@ -142,13 +158,13 @@ export default {
   successMethod(resp) {
     Message.success({
       content: resp.message,
-      duration: 5,
+      duration: 3,
     });
   },
   errMethod(err) {
     Message.error({
       content: err.message,
-      duration: 5,
+      duration: 3,
     });
   },
   downloadBlob(resp, fileName){

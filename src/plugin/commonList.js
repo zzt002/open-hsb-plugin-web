@@ -61,6 +61,7 @@ export default {
   methods: {
     list() {
       let _this = this;
+      _this.loading = true;
       if (this.listType === 1) {
         this.$axios.get(this.url, this.param,
           function (resp) {

@@ -1,4 +1,5 @@
 import commonForm from '../../plugin/commonForm'
+import {checkLogin} from '../../plugin/storage'
 
 export default {
   name: 'LOGIN',
@@ -28,7 +29,6 @@ export default {
               url: '/login',
               method: 'post',
               submitName: '登录',
-              login: true,
             }
           }, [])
         ]
@@ -52,4 +52,7 @@ export default {
     )
       ;
   },
+  created() {
+    checkLogin();
+  }
 }

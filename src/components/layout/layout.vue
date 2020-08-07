@@ -81,6 +81,7 @@
 </template>
 <script>
   import reloadFailList from '../reload/reloadFailList'
+  import {checkLogin,logout} from '../../plugin/storage'
   export default {
     data: () => ({
       username: localStorage.getItem('name') === '' ? '无名' : localStorage.getItem('name'),
@@ -129,34 +130,30 @@
         this.layoutInfo.second = item.text;
         this.$store.commit('setLayoutInfo', this.layoutInfo);
       },
-      loginCheck() {
-        let currentMills = new Date().getTime();
-        let exp = localStorage.getItem('exp');
-        if (exp === undefined || currentMills > exp) {
-          this.$router.push('/login');
-        }
-      },
       loginTimer() {
-          setInterval(this.loginCheck, 1000)
+          setInterval(checkLogin, 1000)
       },
       exit() {
-        localStorage.removeItem("exp");
+        logout();
       }
+    },
+    created() {
+      checkLogin();
     },
     mounted() {
       this.loginTimer();
 
       let layoutInfo = sessionStorage.getItem('layoutInfo');
-      if (layoutInfo === null) {
-        this.layoutInfo.openName = this.menu[0].submenu;
-        this.layoutInfo.active = this.menu[0].menuItem[0].name;
-        this.layoutInfo.first =  this.menu[0].text;
-        this.layoutInfo.second = this.menu[0].menuItem[0].text;
-        this.$router.push(this.menu[0].menuItem[0].to);
+      if (layoutInfo === null || layoutInfo === undefined) {
+        // this.layoutInfo.openName = this.menu[0].submenu;
+        // this.layoutInfo.active = this.menu[0].menuItem[0].name;
+        // this.layoutInfo.first =  this.menu[0].text;
+        // this.layoutInfo.second = this.menu[0].menuItem[0].text;
+        // this.$router.push(this.menu[0].menuItem[0].to);
       } else {
         this.layoutInfo = JSON.parse(layoutInfo);
+        document.getElementById('menu' + this.layoutInfo.openName).click();
       }
-      document.getElementById('menu' + this.layoutInfo.openName).click();
     },
   }
 </script>

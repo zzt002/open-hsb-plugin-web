@@ -46,14 +46,14 @@ export function produce(inputP) {
                 document.getElementById('refresh').click();
                   Message.info({
                     content: resp.message,
-                    duration: 5,
+                    duration: 3,
                   });
                   loading = false;
               },
               function (err) {
                 Message.error({
                   content: err.message,
-                  duration: 5,
+                  duration: 3,
                 });
                 loading = false;
               }

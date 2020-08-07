@@ -8,10 +8,6 @@ export default {
       type: String,
       default: '提交',
     },
-    login: {
-      type: Boolean,
-      default: false,
-    },
     url: {
       type: String,
       default: '',
@@ -95,23 +91,16 @@ export default {
         });
     },
     success(resp) {
-      if(this.login && resp.code === 55) {
-        // 55 为登录返回code
-        localStorage.setItem("token", resp.data.token);
-        localStorage.setItem("name", resp.data.name);
-        localStorage.setItem("exp", resp.data.exp);
-        this.$router.push('/');
-      }
       this.$Message.success({
         content: resp.message,
-        duration: 5,
+        duration: 3,
       });
       this.buttonLoading = false;
     },
     error(err) {
       this.$Message.error({
         content: err.message,
-        duration: 10,
+        duration: 5,
         closable: true,
       });
       this.buttonLoading = false;

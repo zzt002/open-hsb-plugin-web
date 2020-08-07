@@ -21,10 +21,6 @@ export default {
       type: String,
       default: '',
     },
-    login: {
-      type: Boolean,
-      default: false,
-    },
     method: {
       type: String,
       default: 'get',
@@ -250,7 +246,6 @@ export default {
             submitName: _this.submitName,
             showConfirm: _this.showConfirm,
             confirmMessage: _this.confirmMessage,
-            login: _this.login,
           },
           on: {
             'afterSuccess': () => {
