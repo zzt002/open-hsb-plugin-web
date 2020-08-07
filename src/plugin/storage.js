@@ -1,21 +1,19 @@
-import router from '../router'
-
-function checkLogin() {
+function isLogin() {
   let currentMills = new Date().getTime();
   let exp = localStorage.getItem('exp');
   if (exp === undefined || currentMills > exp) {
-    router.push('/login');
-  } else {
-    // router.push('/');
+    return false;
   }
+  return true;
 }
+
 function logout() {
   localStorage.removeItem("exp");
   sessionStorage.clear();
 }
 
 export {
-  checkLogin, logout
+  isLogin, logout
 }
 
 
