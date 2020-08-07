@@ -1,5 +1,5 @@
 import commonForm from '../../plugin/commonForm'
-import {checkLogin} from '../../plugin/storage'
+import {isLogin} from '../../plugin/storage'
 
 export default {
   name: 'LOGIN',
@@ -53,6 +53,8 @@ export default {
       ;
   },
   created() {
-    checkLogin();
+    if (isLogin()) {
+      this.$router.push('/');
+    }
   }
 }

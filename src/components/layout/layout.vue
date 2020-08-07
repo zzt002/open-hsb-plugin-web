@@ -16,7 +16,7 @@
     top: 10px;
     left: 20px;
     padding: 0px 5px;
-    font-size: 30px;
+    font-size: 28px;
   }
   .layout-nav{
     width: 200px;
@@ -36,8 +36,10 @@
           <div class="layout-logo">HSB PLUGIN</div>
           <div class="layout-nav">
             <MenuItem name="1">
+              <div @click="copy()">
               <Icon type="ios-contact" size="20"></Icon>
-              {{username}}
+                {{username}}
+              </div>
             </MenuItem>
           </div>
           <div class="layout-exit">
@@ -81,7 +83,8 @@
 </template>
 <script>
   import reloadFailList from '../reload/reloadFailList'
-  import {checkLogin,logout} from '../../plugin/storage'
+  import {isLogin,logout} from '../../plugin/storage'
+  import {copy} from '../../plugin/documentCopy'
   export default {
     data: () => ({
       username: localStorage.getItem('name') === '' ? '无名' : localStorage.getItem('name'),
@@ -131,14 +134,23 @@
         this.$store.commit('setLayoutInfo', this.layoutInfo);
       },
       loginTimer() {
-          setInterval(checkLogin, 1000)
+          setInterval(this.checkLogin, 1000)
       },
       exit() {
         logout();
+      },
+      copy() {
+        copy(localStorage.getItem('token'));
+        this.$Message.info("Token已复制到剪切板")
+      },
+      checkLogin() {
+        if (!isLogin()) {
+          this.$router.push('/login');
+        }
       }
     },
     created() {
-      checkLogin();
+      this.checkLogin();
     },
     mounted() {
       this.loginTimer();

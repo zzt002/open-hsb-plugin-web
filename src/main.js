@@ -11,8 +11,6 @@ Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
 Vue.prototype.$store = store;
 
-Vue.prototype.$url = process.env.API_URL
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
