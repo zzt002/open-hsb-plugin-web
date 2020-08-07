@@ -44,7 +44,7 @@ export function produce(inputP) {
             axios.post(url, null,
               function (resp) {
                 document.getElementById('refresh').click();
-                  Message.info({
+                  Message.success({
                     content: resp.message,
                     duration: 3,
                   });

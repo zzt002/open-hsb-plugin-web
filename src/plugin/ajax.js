@@ -32,6 +32,7 @@ axiosInstance.interceptors.response.use(
         localStorage.setItem("name", resp.data.data.name);
         localStorage.setItem("exp", resp.data.data.exp);
         router.push('/');
+        router.go(0);
         break;
       case 555:
         resp.message = resp.data.message;
