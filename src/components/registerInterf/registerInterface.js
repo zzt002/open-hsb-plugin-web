@@ -31,8 +31,9 @@ export default {
     },
   },
   render(h) {
-    return h('div',{},[
+    return h('div',[
       this.render_list(h),
+      h('i', {style:{color:'#FF0000',position:'absolute','left':'240px',margin:'50px 8px'}},'注：当前版本部署至三台服务器： 10.54.19.91(app02/subapp02), 10.54.19.237(app03/subapp03), 10.54.19.238(app04/subapp04)')
     ]);
   }
 }
