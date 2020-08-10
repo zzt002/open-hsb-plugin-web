@@ -14,6 +14,14 @@ export default {
     day: 3,
     listNum: 10,
     logColumns: [
+      {title: '时间',width:'110px',align:'center',render:(h,params) => {
+          let impl = params.row.implNum;
+          let year = impl.substr(1,4);
+          let month = impl.substr(5,2);
+          let day = impl.substr(7,2);
+          let time = year + '-' + month + '-' + day;
+          return h('span', time);
+        }},
       // {title: 'ID', key: 'id', tooltip: true, align: 'center', width: '100px',},
       {title: '工单号', key: 'implNum', tooltip: true, width: '200px', align: 'center'},
       // {title: '资源ID', key: 'resId', tooltip: true, align: 'center', width: '70px',},
