@@ -63,16 +63,17 @@ export default {
       return h('div',
         {
           style:{
-            position: 'relative',
-            bottom: '-18px',
-            width: '92%',
+            position: 'absolute',
+            left:'248px',
+            margin:'-16px 0',
+            width: '50%',
           }
         },
         [
           h('commonButton', {
             style: {
-              position: 'relative',
-              left: '-30%',
+              position: 'absolute',
+              left: '0',
               display: 'inline',
             },
             props: {
@@ -86,12 +87,12 @@ export default {
               }
             }
           }, []),
-          h('Input',{style:{width:'36px',position:'relative',left:'-30%'},props:{value: this.day},on:{'on-change':(event)=>{this.day = event.target.value;}}}),
-          h('span',{style:{'font-size':'16px','font-weight':'bold',position:'relative',left:'-30%'}},'天'),
-          h('span',{style:{'font-size':'16px','font-weight':'bold',position:'relative',left:'30%'}},['显示: ',]),
+          h('Input',{style:{width:'36px',position:'absolute',left:'90px'},props:{value: this.day},on:{'on-change':(event)=>{this.day = event.target.value;}}}),
+          h('span',{style:{'font-size':'16px','font-weight':'bold',position:'absolute',left:'128px',top:'4px'}},'天'),
+          h('span',{style:{'font-size':'16px','font-weight':'bold',position:'relative',left:'37%'}},['显示: ',]),
           h('Select', {
             props:{value: this.listNum},
-            style:{width:'100px',position:'relative',left:'30%'},
+            style:{width:'100px',position:'relative',left:'37%'},
             on:{
               'on-change':(item) => {
                 this.listNum = item;
@@ -102,14 +103,14 @@ export default {
               return h('Option',{props:{label:item.label,value:item.value}})
             })
           ),
-          h('span',{style:{'font-size':'16px','font-weight':'bold',position:'relative',left:'30%'}},'筛选`未添加消费者`:'),
+          h('span',{style:{'font-size':'16px','font-weight':'bold',position:'relative',left:'37%'}},'筛选`未添加消费者`:'),
           h('i-switch', {
               props: {
                 value: this.unConfigType === 1,
               },
               style:{
                 position:'relative',
-                left:'30%'
+                left:'37%'
               },
               on: {
                 'on-change': (value) => {
