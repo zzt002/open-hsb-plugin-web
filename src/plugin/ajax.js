@@ -9,12 +9,14 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (conf) => {
+    // console.log("request-conf");
     // console.log('conf:' + JSON.stringify(conf));
     let token = localStorage.getItem("token");
     conf.headers['token'] = token;
     return conf;
   },
   (err) => {
+    // console.log("request-err");
     // console.log('request-err:' + JSON.stringify(err.data));
     return Promise.reject(err);
   }
@@ -22,6 +24,7 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (resp) => {
+    // console.log("reponse");
     switch(resp.data.code){
       case 401:
         router.push('/login');
@@ -42,8 +45,11 @@ axiosInstance.interceptors.response.use(
     return resp.data;
   },
   (err) => {
+    // console.log("reponse-err");
     if (err.message.indexOf('timeout') > -1) {
       err.message = '请求超时';
+    } else if (err.response === undefined) {
+      // console.log("err:" + JSON.stringify(err))
     } else {
       let resp = err.response.data;
       switch (resp.status) {
