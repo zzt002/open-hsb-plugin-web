@@ -77,7 +77,8 @@ export default {
               display: 'inline',
             },
             props: {
-              url: '/resourcePass/openIpAuto' + this.day,
+              url: '/resourcePass/openIpAuto' + this.listNum,
+              params: {"range":this.day},
               submitName: '自动配置',
               method: 'post',
             },

@@ -3,7 +3,7 @@ import {Message} from 'view-design'
 import router from '../router'
 
 const axiosInstance = axios.create({
-  timeout: 5000,
+  timeout: 10000,
   baseURL: process.env.NODE_ENV === "production" ? (process.env.API_URL + ":" + process.env.URL_PORT) : "/api"
 });
 

@@ -7,7 +7,7 @@ export default {
   data: () => ({
     logColumns:
     [
-      {title: 'ID', key: 'id', tooltip: true, width: '70px', align: 'center'},
+      // {title: 'ID', key: 'id', tooltip: true, width: '70px', align: 'center'},
       {title: '创建时间', key: 'createDate', tooltip: true, width: '170px', align: 'center'},
       {title: '修改时间', key1: 'modifyDate', maxWidth: 0},
       {title: '标题', key: 'title',tooltip: true, width: '130px', align: 'center',},
