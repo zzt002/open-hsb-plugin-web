@@ -84,7 +84,10 @@ export default {
             },
             on:{
               'consumeMethod':()=> {
-                this.refresh();
+                let _this=this;
+                this.$nextTick(() => {
+                  _this.refresh();
+                })
               }
             }
           }, []),
