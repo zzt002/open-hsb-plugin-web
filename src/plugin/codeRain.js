@@ -1,3 +1,4 @@
+// alert(navigator.userAgent.toLocaleLowerCase())
 let can = document.createElement("canvas");
 can.id = "canvas";
 can.style.position="fixed";
