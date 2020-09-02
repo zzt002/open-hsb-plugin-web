@@ -30,7 +30,10 @@ export default {
       {title: '配置信息', key: 'implRecord', tooltip: true, align: 'center'},
       // {title: '配置人ID', key: 'modifyUserId', tooltip: true, align: 'center', width: '70px',},
       // {title: '状态', key: 'sts', tooltip: true, align: 'center', width: '70px',},
-      commonListOperate.produce({url:'/resourcePass/openIpByImplNum/',key:'implNum',text:'配置',width:'90px'}),
+      commonListOperate.produce([
+          {url:'/resourcePass/openIpByImplNum/',key:'implNum',text:'配置',width:'200px'},
+          {url:'/resourcePass/config/',key:'implNum',text:'完结'}
+        ]),
     ],
     numList: [
       {
