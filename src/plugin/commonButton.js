@@ -49,7 +49,6 @@ export default {
               } else {
                 this.request();
               }
-              this.$emit('consumeMethod');
             },
           }
         }, [this.submitName]

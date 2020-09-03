@@ -40,7 +40,7 @@ export default {
           method: 'post',
         },
         on:{
-          'consumeMethod':()=> {
+          'afterSuccess':()=> {
             this.refresh();
           }
         }

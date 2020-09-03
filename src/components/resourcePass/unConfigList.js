@@ -86,11 +86,8 @@ export default {
               method: 'post',
             },
             on:{
-              'consumeMethod':()=> {
-                let _this=this;
-                this.$nextTick(() => {
-                  _this.refresh();
-                })
+              'afterSuccess':()=> {
+                this.refresh();
               }
             }
           }, []),
@@ -132,7 +129,7 @@ export default {
           ),
         ]
       );
-    }
+    },
   },
   render(h) {
     return h('div', {}, [
@@ -150,7 +147,7 @@ export default {
             this.parList = data;
           }
         }
-      })
+      }),
     ]);
   },
 }
