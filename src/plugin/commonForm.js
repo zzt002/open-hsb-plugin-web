@@ -205,7 +205,6 @@ export default {
     render_input(h, param) {
       let clearable = param.clearable === undefined ? true : param.clearable;
       let password = param.password === undefined ? false : param.password;
-      let _this = this;
       return h('Input', {
         props: {
           'type': param.inputType,

@@ -1,9 +1,10 @@
 import axios from 'axios'
 import {Message} from 'view-design'
 import router from '../router'
+import md5 from 'js-md5'
 
 const axiosInstance = axios.create({
-  timeout: 10000,
+  timeout: 30000,
   baseURL: process.env.NODE_ENV === "production" ? (process.env.API_URL + ":" + process.env.URL_PORT) : "/api"
 });
 
@@ -84,7 +85,11 @@ export default {
   dealPostData(data) {
     let formData = new FormData();
     for (let key in data) {
-      formData.append(key, data[key]);
+      let value = data[key];
+      if (value !== undefined && value !== '' && key === 'password') {
+        value = md5(data[key]);
+      }
+      formData.append(key, value);
     }
     // console.log('formData:' + formData);
     // console.log('formDataS:' + JSON.stringify(formData));
