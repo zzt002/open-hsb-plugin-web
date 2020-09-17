@@ -95,8 +95,14 @@ export default [
         components: {
           home: () => import('../components/other/api')
         }
+      },
+      {
+        path: '/healthCode',
+        name:'healthCode',
+        components: {
+          home: () => import('../components/other/healthCode')
+        }
       }
-
 
     ]
   }

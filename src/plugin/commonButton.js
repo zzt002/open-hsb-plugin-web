@@ -28,6 +28,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    fileName: {
+      type: String,
+      default: 'file_name.xlsx',
+    },
+    download: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     render_submit(h) {
@@ -38,6 +46,7 @@ export default {
           },
           props: {
             loading: this.buttonLoading,
+            disabled: this.params.file === '',
             // type: 'success',
             // ghost: true,
             background: true,
@@ -80,14 +89,27 @@ export default {
     request() {
       let _this = this;
       _this.buttonLoading = true;
-      this.$axios.ajax(this.url, this.method, this.params,
-        function (resp) {
-          _this.$emit('afterSuccess');
-          _this.success(resp);
-        },
-        function (err) {
-          _this.error(err);
-        });
+      if (this.download) {
+        this.$axios.download(this.url, this.method, this.params, 0, this.fileName,
+          function (resp) {
+            _this.$axios.downloadBlob(resp, _this.fileName);
+            _this.buttonLoading = false;
+          },
+          function (err) {
+            _this.error(err);
+          }
+        );
+      } else {
+        this.$axios.ajax(this.url, this.method, this.params,
+          function (resp) {
+            _this.$emit('afterSuccess');
+            _this.success(resp);
+          },
+          function (err) {
+            _this.error(err);
+          }
+        );
+      }
     },
     success(resp) {
       this.$Message.success({

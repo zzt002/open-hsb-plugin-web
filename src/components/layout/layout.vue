@@ -121,8 +121,9 @@
             {name: '5-2',to:'taskForOpenIp',text:'定时任务'},
             {name: '5-3',to:'rabbit',text:'RabbitMq'},
             {name: '5-4',to:'api',text:'API'},
+            {name: '5-5',to:'healthCode',text:'健康码EXCEL功能数据'},
           ]
-        },
+        }
       ],
     }),
     methods: {

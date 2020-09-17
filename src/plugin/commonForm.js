@@ -37,6 +37,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    fileName: {
+      type: String,
+      default: 'file_name.xlsx',
+    },
+    download: {
+      type: Boolean,
+      default: false,
+    },
     params: {
       type: Array,
       default: () => [],
@@ -124,7 +132,7 @@ export default {
               if (param.help.type === 'link') {
                 return h('a', {href:'#',on:{
                   click: () => {
-                    _this.$axios.download(param.help.url, param.help.fileName);
+                    _this.$axios.download(param.help.url, 'get', null, null, param.help.fileName);
                   }
                   }}, param.help.text);
               } else if (param.help.type === 'text') {
@@ -245,6 +253,8 @@ export default {
             submitName: _this.submitName,
             showConfirm: _this.showConfirm,
             confirmMessage: _this.confirmMessage,
+            fileName: _this.fileName,
+            download: _this.download,
           },
           on: {
             'afterSuccess': () => {

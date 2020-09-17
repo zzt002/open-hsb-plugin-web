@@ -91,7 +91,7 @@ export default {
       }
       formData.append(key, value);
     }
-    // console.log('formData:' + formData);
+    // console.log('data:' + JSON.stringify(data));
     // console.log('formDataS:' + JSON.stringify(formData));
     return formData;
   },
@@ -154,16 +154,26 @@ export default {
       }
     });
   },
-  download(url, fileName) {
+  download(url, method, data, timeout, fileName, successMethod, errMethod) {
+    let formData = this.dealPostData(data);
     return axiosInstance({
       url: url,
-      method: 'get',
+      method: method,
+      data: formData,
       responseType: 'blob',
+      timeout: timeout,
     }).then(resp => {
-      this.downloadBlob(resp, fileName);
+      if (successMethod === undefined) {
+        this.downloadBlob(resp, fileName);
+      } else {
+        successMethod(resp);
+      }
     }).catch(err => {
-      this.errMethod(err);
-
+      if (errMethod === undefined) {
+        this.errMethod(err);
+      } else {
+        errMethod(err);
+      }
     });
   },
 
