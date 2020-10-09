@@ -8,7 +8,6 @@ let commonOperateCreate = {
   text: 'click',
   width: '100px',
 };
-let arrParam = [];
 
 let loading = false;
 
@@ -25,9 +24,11 @@ function dealParam(param) {
   return obj;
 }
 function dealArr(inputP) {
+  let arrParam = [];
   for (let i = 0; i < inputP.length; i++) {
     arrParam[i] = dealParam(inputP[i]);
   }
+  return arrParam;
 }
 
 function render_button(h, param, params) {
@@ -69,7 +70,7 @@ function render_button(h, param, params) {
 }
 
 export function produce(inputP) {
-  dealArr(inputP);
+  let arrParam = dealArr(inputP);
   return {
     title: commonOperateCreate.title, tooltip: true, align: 'center', width: commonOperateCreate.width , render: (h, params) => {
       return h('div',{},

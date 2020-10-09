@@ -17,7 +17,7 @@ export default {
         {title: '重载url', key: 'reloadUrl', tooltip: true, align: 'center'},
         {title: '重试次数', key: 'retryCount', tooltip: true, align: 'center'},
         {title: '错误信息', key: 'errorMessage', tooltip: true, align: 'center'},
-        commonListOperate.produce({url:'/reload/fail/reload/',key:'id',text:'重载'}),
+        commonListOperate.produce([{url:'/reload/fail/reload/',key:'id',text:'重载'}]),
       ],
   }),
   methods: {
