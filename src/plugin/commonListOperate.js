@@ -9,8 +9,6 @@ let commonOperateCreate = {
   width: '100px',
 };
 
-let loading = false;
-
 function dealParam(param) {
   let obj = {};
   for (let localKey in commonOperateCreate) {
@@ -32,17 +30,20 @@ function dealArr(inputP) {
 }
 
 function render_button(h, param, params) {
+  let loading = false;
   return h('Button', {
     props: {
       type: 'primary',
       shape: 'circle',
       ghost: true,
       size: 'small',
-      loading: loading,
+      loading: loading, // 无法动态绑定，未找到原因，初步认为是js而非vue渲染造成
     },
     on: {
-      'click': () => {
+      'click': (event) => {
         loading = true;
+        let is = event.currentTarget;
+        is.disabled = true;
         let url = param.url;
         if (param.key !== '') {
           url = url + params.row[param.key];
@@ -55,6 +56,7 @@ function render_button(h, param, params) {
               duration: 3,
             });
             loading = false;
+            is.disabled = false;
           },
           function (err) {
             Message.error({
@@ -62,6 +64,7 @@ function render_button(h, param, params) {
               duration: 3,
             });
             loading = false;
+            is.disabled = false;
           }
         );
       }

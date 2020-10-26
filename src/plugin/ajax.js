@@ -4,7 +4,7 @@ import router from '../router'
 import md5 from 'js-md5'
 
 const axiosInstance = axios.create({
-  timeout: 30000,
+  timeout: 600000,
   baseURL: process.env.NODE_ENV === "production" ? (process.env.API_URL + ":" + process.env.URL_PORT) : "/api"
 });
 
