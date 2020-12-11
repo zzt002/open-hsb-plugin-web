@@ -102,12 +102,6 @@ export default [
         components: {
           home: () => import('../components/other/healthCode')
         }
-      },{
-        path: '/api101',
-        name:'api101',
-        components: {
-          home: () => import('../components/other/api101')
-        }
       }
 
     ]
