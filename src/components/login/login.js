@@ -41,18 +41,18 @@ export default {
   },
   render(h) {
     return h('div', {
-        // style: {
-        //   background: 'url(' + require('../../assets/bg1.jpg') + ') no-repeat center center',
-        //   position: 'fixed',
-        //   top: 0,
-        //   left: 0,
-        //   width: '100%',
-        //   height: '100%',
-        // },
+        style: {
+          background: 'url(' + require('../../assets/bg1.jpg') + ') no-repeat center center',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+        },
       },
       [
-        rainy(),
-        this.render_login(h)
+      //   rainy(),
+         this.render_login(h)
       ]
     );
   },
